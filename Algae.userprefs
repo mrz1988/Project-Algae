@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{60B96597-C73E-4DF3-A728-CB0483035AF2}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Math.Algebraic/Operations/Tangent.cs">
+    <Files>
+      <File FileName="../../src/on-ramp-mobile-app/Redbox/Application/AcuityBrands.Redbox.Application/:Users:matt:Projects:Algae:ZMath.Algebraic:MyClass.cs" Line="4" Column="15" />
+      <File FileName="Math.Algebraic/Operations/Multiplication.cs" Line="4" Column="32" />
+      <File FileName="Math.Algebraic/Operations/BinaryOperation.cs" Line="18" Column="27" />
+      <File FileName="Math.Algebraic/Operations/UnaryOperation.cs" Line="11" Column="4" />
+      <File FileName="Math.Algebraic/Operations/Addition.cs" Line="18" Column="2" />
+      <File FileName="Math.Algebraic/Operations/Division.cs" Line="16" Column="4" />
+      <File FileName="Math.Algebraic/Operations/Exponentiation.cs" Line="5" Column="3" />
+      <File FileName="Math.Algebraic/Operations/Sine.cs" Line="2" Column="1" />
+      <File FileName="Math.Algebraic/Operations/Cosine.cs" Line="14" Column="4" />
+      <File FileName="Math.Algebraic/Operations/Tangent.cs" Line="15" Column="37" />
+      <File FileName="Math.Algebraic/Operations/Symbols/Operations/Sine.cs" Line="1" Column="1" />
+      <File FileName="Math.Algebraic/Operations/Symbols/Operations/Tangent.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../src/on-ramp-mobile-app/Redbox/Application/AcuityBrands.Redbox.Application/Models/WebApi/AzureApi.cs" line="106" offsetX="292" offsetY="1575" expression="ex" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.ItemProperties.Algae.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
+</Properties>
