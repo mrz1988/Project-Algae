@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{603A64D1-6383-4A3E-9558-872C00F67AF3}</ProjectGuid>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ZMath.Algebraic</RootNamespace>
+    <AssemblyName>ZMath.Algebraic</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Expressions\Symbols\ISymbol.cs" />
+    <Compile Include="Expressions\Symbols\Numbers\Number.cs" />
+    <Compile Include="Expressions\Symbols\Numbers\NumberType.cs" />
+    <Compile Include="Expressions\Symbols\Operations\BinaryOperation.cs" />
+    <Compile Include="Expressions\Symbols\Operations\UnaryOperation.cs" />
+    <Compile Include="Expressions\Symbols\Operations\Multiplication.cs" />
+    <Compile Include="Expressions\Symbols\Operations\Addition.cs" />
+    <Compile Include="Expressions\Symbols\Operations\Division.cs" />
+    <Compile Include="Expressions\Symbols\Operations\Exponentiation.cs" />
+    <Compile Include="Expressions\Symbols\Operations\Sine.cs" />
+    <Compile Include="Expressions\Symbols\Operations\Cosine.cs" />
+    <Compile Include="Expressions\Symbols\Operations\Tangent.cs" />
+    <Compile Include="Expressions\Symbols\SymbolType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Expressions\" />
+    <Folder Include="Expressions\Symbols\" />
+    <Folder Include="Expressions\Symbols\Numbers\" />
+    <Folder Include="Expressions\Symbols\Operations\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+</Project>
