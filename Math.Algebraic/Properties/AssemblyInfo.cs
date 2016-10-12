@@ -4,12 +4,12 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Math.Algebraic")]
+[assembly: AssemblyTitle("ZMath.Algebraic")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("MRZStudios")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("matt")]
+[assembly: AssemblyCopyright("Matt Zychowski")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
