@@ -53,6 +53,11 @@ namespace ZMath.Algebraic
 			//SymbolType.Logarithm,
 		};
 
+		public static HashSet<SymbolType> DirectiveSymbols = new HashSet<SymbolType> {
+			SymbolType.OpenBracket,
+			SymbolType.CloseBracket,
+		};
+
 		public static bool IsValue(this SymbolType t)
 		{
 			return Values.Contains(t);
@@ -66,6 +71,11 @@ namespace ZMath.Algebraic
 		public static bool IsBinaryOperation(this SymbolType t)
 		{
 			return BinaryOperations.Contains(t);
+		}
+
+		public static bool IsDirectiveSymbol(this SymbolType t)
+		{
+			return DirectiveSymbols.Contains(t);
 		}
 
 		public static int Order(this SymbolType t)

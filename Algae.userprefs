@@ -1,25 +1,8 @@
 ﻿<Properties StartupConfiguration="{60B96597-C73E-4DF3-A728-CB0483035AF2}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Math.Algebraic/Properties/AssemblyInfo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ZMath.Algebraic/Expressions/SymbolTree/SymbolType.cs">
     <Files>
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/SymbolType.cs" Line="100" Column="40" />
-      <File FileName="Math.Algebraic/Expressions/Converters/Tokenizers/SymbolToken.cs" Line="77" Column="1" />
-      <File FileName="Math.Algebraic/Expressions/Converters/Tokenizers/StringTokenizer.cs" Line="28" Column="5" />
-      <File FileName="Math.Algebraic/Expressions/Converters/TreeBuilder.cs" Line="168" Column="23" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/SymbolTree.cs" Line="17" Column="3" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/ISymbol.cs" Line="7" Column="3" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/Sine.cs" Line="8" Column="65" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/Negation.cs" Line="8" Column="69" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/Division.cs" Line="8" Column="1" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/Exponentiation.cs" Line="8" Column="75" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/Multiplication.cs" Line="8" Column="75" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/UnaryOperation.cs" Line="27" Column="2" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/Tangent.cs" Line="8" Column="68" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/Cosine.cs" Line="9" Column="3" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/Addition.cs" Line="8" Column="19" />
-      <File FileName="ZMath.Algebraic.Tests/MyClass.cs" Line="1" Column="1" />
-      <File FileName="ZMath.Algebraic.Tests/Expressions/SymbolTree/SymbolTypeTests.cs" Line="5" Column="32" />
-      <File FileName="Math.Algebraic/Expressions/SymbolTree/Operations/BinaryOperation.cs" Line="7" Column="31" />
-      <File FileName="Math.Algebraic/Properties/AssemblyInfo.cs" Line="25" Column="39" />
+      <File FileName="ZMath.Algebraic.Tests/packages.config" Line="1" Column="1" />
+      <File FileName="ZMath.Algebraic/Expressions/SymbolTree/SymbolType.cs" Line="79" Column="4" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
