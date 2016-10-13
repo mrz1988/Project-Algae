@@ -10,6 +10,8 @@ namespace ZMath.Algebraic
 		public string Token { get; private set; }
 
 		public static SymbolToken NegationToken { get { return new SymbolToken(SymbolType.Negation, "-"); } }
+		public static SymbolToken OpenBracket { get { return new SymbolToken(SymbolType.OpenBracket, "("); } }
+		public static SymbolToken CloseBracket { get { return new SymbolToken(SymbolType.CloseBracket, ")"); } }
 
 		public static readonly Dictionary<string, SymbolType> TextOperators = new Dictionary<string, SymbolType> {
 			{ "sin", SymbolType.Sine },
@@ -27,7 +29,13 @@ namespace ZMath.Algebraic
 			{ "*", SymbolType.Multiplication },
 			{ "/", SymbolType.Division },
 			{ "^", SymbolType.Exponentiation },
-			{ "!", SymbolType.Factorial }
+			{ "!", SymbolType.Factorial },
+			{ "(", SymbolType.OpenBracket },
+			{ "[", SymbolType.OpenBracket },
+			{ "{", SymbolType.OpenBracket },
+			{ ")", SymbolType.CloseBracket },
+			{ "]", SymbolType.CloseBracket },
+			{ "}", SymbolType.CloseBracket },
 		};
 
 		public static readonly List<string> ValidSymbols = SymbolicOperators.Keys.ToList();
@@ -71,6 +79,38 @@ namespace ZMath.Algebraic
 
 			token = null;
 			return false;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+				return false;
+
+			var t = (SymbolToken)obj;
+
+			return Token == t.Token && Type == t.Type;
+		}
+
+		public override int GetHashCode()
+		{
+			var hash = 27;
+			hash = (hash * 13) + Type.GetHashCode();
+			hash = (hash * 13) + Token.GetHashCode();
+
+			return hash;
+		}
+
+		public static bool operator ==(SymbolToken a, SymbolToken b)
+		{
+			if (a == null)
+				return b == null;
+
+			return a.Equals(b);
+		}
+
+		public static bool operator !=(SymbolToken a, SymbolToken b)
+		{
+			return !(a == b);
 		}
 	}
 }

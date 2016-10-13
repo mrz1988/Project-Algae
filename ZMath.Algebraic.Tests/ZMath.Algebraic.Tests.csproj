@@ -34,6 +34,10 @@
     <Compile Include="Expressions\SymbolTree\NumberTests.cs" />
     <Compile Include="Expressions\SymbolTree\BinaryOperationTests.cs" />
     <Compile Include="Expressions\SymbolTree\UnaryOperationTests.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\SimpleStringTokenizerTests.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\SymbolTokenTests.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\SymbolTokens.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\ComplexStringTokenizerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="xunit.abstractions">
@@ -61,6 +65,8 @@
   <ItemGroup>
     <Folder Include="Expressions\" />
     <Folder Include="Expressions\SymbolTree\" />
+    <Folder Include="Expressions\Converters\" />
+    <Folder Include="Expressions\Converters\Tokenizers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
