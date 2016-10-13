@@ -141,5 +141,23 @@ namespace ZMath.Algebraic.Tests
 			var result = StringTokenizer.Parse("2 3  +41 ");
 			Assert.Equal(expected, result);
 		}
+
+		[Fact]
+		public static void ChokesOnUnknownWord()
+		{
+			Assert.Throws<ArgumentException>(() =>
+			{
+				StringTokenizer.Parse("2 + foo(3)");
+			});
+		}
+
+		[Fact]
+		public static void ChokesOnUnknownSymbol()
+		{
+			Assert.Throws<ArgumentException>(() =>
+			{
+				StringTokenizer.Parse("2 ; 3");
+			});
+		}
 	}
 }

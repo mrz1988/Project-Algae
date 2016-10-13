@@ -40,7 +40,26 @@ namespace ZMath.Algebraic.Tests
 			};
 
 			var result = StringTokenizer.Parse("20 * -sin(123.45)");
-			Assert.Equal(expected.Count, result.Count);
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		public static void CanTokenizeNegatedParenthesizedExpression()
+		{
+			var expected = new List<SymbolToken> {
+				SymbolTokens.Number(20),
+				SymbolTokens.Subtraction,
+				SymbolToken.NegationToken,
+				SymbolToken.OpenBracket,
+				SymbolTokens.Number(3),
+				SymbolTokens.Addition,
+				SymbolTokens.Number(3),
+				SymbolTokens.Multiplication,
+				SymbolTokens.Number(3),
+				SymbolToken.CloseBracket
+			};
+
+			var result = StringTokenizer.Parse("20 --(3 + 3 * 3)");
 			Assert.Equal(expected, result);
 		}
 	}
