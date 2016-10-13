@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ZMath.Algebraic
 {
-	public class Number : ISymbol
+	public class Number : ISymbol, IComparable
 	{
 		private int _intVal;
 		private double _floatVal;
@@ -68,6 +68,62 @@ namespace ZMath.Algebraic
 		public Number GetValue()
 		{
 			return this;
+		}
+
+		public int CompareTo(object obj)
+		{
+			if (GetType() != obj.GetType())
+				throw new ArgumentException("Cannot compare, types differ");
+
+			if (obj == null)
+				return 1;
+
+			var n = (Number)obj;
+			return AsFloatingPt.CompareTo(n.AsFloatingPt);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+				return false;
+
+			Number n = (Number)obj;
+
+			if (IsFloatingPt || n.IsFloatingPt)
+			{
+				// Tolerance for floating point equality is defined as
+				// 0.000001% of x in x.Equals(y)
+				var epsilon = 0.00000001 * AsFloatingPt;
+				var difference = Math.Abs(n.AsFloatingPt - AsFloatingPt);
+				return difference < epsilon;
+			}
+
+			return n.AsInt == AsInt;
+		}
+
+		public override int GetHashCode()
+		{
+			return AsFloatingPt.GetHashCode();
+		}
+
+		public static bool operator ==(Number a, Number b)
+		{
+			return a.Equals(b);
+		}
+
+		public static bool operator !=(Number a, Number b)
+		{
+			return !(a == b);
+		}
+
+		public static bool operator >(Number a, Number b)
+		{
+			return a.CompareTo(b) > 0;
+		}
+
+		public static bool operator <(Number a, Number b)
+		{
+			return a.CompareTo(b) < 0;
 		}
 	}
 }
