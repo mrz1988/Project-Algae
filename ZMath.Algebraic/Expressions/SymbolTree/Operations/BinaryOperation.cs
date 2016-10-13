@@ -3,8 +3,8 @@ namespace ZMath.Algebraic
 {
 	public abstract class BinaryOperation : ISymbol
 	{
-		protected ISymbol _operand1;
-		protected ISymbol _operand2;
+		protected readonly ISymbol _operand1;
+		protected readonly ISymbol _operand2;
 
 		public abstract SymbolType Type { get; }
 
@@ -31,6 +31,52 @@ namespace ZMath.Algebraic
 			}
 
 			return Evaluate(left.AsInt, right.AsInt);
+		}
+
+		public bool LeftEquals(ISymbol other)
+		{
+			return _operand1.Equals(other);
+		}
+
+		public bool RightEquals(ISymbol other)
+		{
+			return _operand2.Equals(other);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+				return false;
+
+			BinaryOperation op = (BinaryOperation)obj;
+
+			if (op.Type != Type)
+				return false;
+
+			return op.LeftEquals(_operand1) && op.RightEquals(_operand2);
+		}
+
+		public override int GetHashCode()
+		{
+			var hash = 27;
+			hash = (hash * 17) + Type.GetHashCode();
+			hash = (hash * 17) + _operand1.GetHashCode();
+			hash = (hash * 17) + _operand2.GetHashCode();
+
+			return hash;
+		}
+
+		public static bool operator ==(BinaryOperation a, ISymbol b)
+		{
+			if (a == null)
+				return b == null;
+			
+			return a.Equals(b);
+		}
+
+		public static bool operator !=(BinaryOperation a, ISymbol b)
+		{
+			return !(a == b);
 		}
 	}
 }

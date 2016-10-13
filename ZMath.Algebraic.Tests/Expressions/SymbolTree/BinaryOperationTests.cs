@@ -119,5 +119,82 @@ namespace ZMath.Algebraic.Tests
 			var exp = new Exponentiation(One, One);
 			Assert.Equal(SymbolType.Exponentiation, exp.Type);
 		}
+
+		[Fact]
+		public static void CanEquateBinaryOperations()
+		{
+			var op1 = new Addition(One, Two);
+			var op2 = new Addition(One, Two);
+
+			Assert.True(op1.Equals(op2));
+			Assert.True(op1.Equals(op1));
+			Assert.True(op2.Equals(op1));
+		}
+
+		[Fact]
+		public static void CanEquateBinaryOperationsWithOperator()
+		{
+			var op1 = new Multiplication(Two, Two);
+			var op2 = new Multiplication(Two, Two);
+
+			Assert.True(op1 == op2);
+			Assert.True(op1 == op1);
+			Assert.True(op2 == op1);
+		}
+
+		[Fact]
+		public static void BinaryOperationsWithDifferentOperandsAreNotEqual()
+		{
+			var op1 = new Addition(One, One);
+			var op2 = new Addition(One, Two);
+			var op3 = new Addition(Two, One);
+
+			Assert.True(op1 != op2);
+			Assert.True(op2 != op1);
+			Assert.True(op2 != op3);
+			Assert.True(op3 != op2);
+			Assert.True(op1 != op3);
+			Assert.True(op3 != op1);
+		}
+
+		[Fact]
+		public static void BinaryOperationsWithDifferentOperatorsAreNotEqual()
+		{
+			var op1 = new Addition(One, One);
+			var op2 = new Multiplication(One, One);
+
+			Assert.True(op1 != op2);
+		}
+
+		[Fact]
+		public static void BinaryOperationsAreNotEqualToTheirResults()
+		{
+			var op1 = new Addition(One, One);
+
+			Assert.True(op1 != Two);
+			Assert.False(op1 == Two);
+		}
+
+		[Fact]
+		public static void BinaryOperationsAreNotEqualToNull()
+		{
+			var op1 = new Addition(One, One);
+
+			Assert.True(op1 != null);
+			Assert.False(op1 == null);
+			Assert.False(null == op1);
+		}
+
+		[Fact]
+		public static void BinaryOperationsCanCompareToUnaryOperations()
+		{
+			var op1 = new Addition(One, One);
+			var op2 = new Negation(Two);
+
+			Assert.False(op1 == op2);
+			Assert.False(op2 == op1);
+			Assert.False(op1.Equals(op2));
+			Assert.False(op2.Equals(op1));
+		}
 	}
 }

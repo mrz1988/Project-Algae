@@ -6,6 +6,7 @@ namespace ZMath.Algebraic.Tests
 	public static class UnaryOperationTests
 	{
 		private static Number One { get { return new Number(1); } }
+		private static Number Two { get { return new Number(2); } }
 
 		[Fact]
 		public static void CanNegateInteger()
@@ -101,6 +102,46 @@ namespace ZMath.Algebraic.Tests
 		{
 			var tangent = new Tangent(One);
 			Assert.Equal(SymbolType.Tangent, tangent.Type);
+		}
+
+		[Fact]
+		public static void UnaryOperationsAreEquatable()
+		{
+			var op1 = new Negation(One);
+			var op2 = new Negation(One);
+
+			Assert.True(op1.Equals(op2));
+			Assert.True(op1 == op2);
+		}
+
+		[Fact]
+		public static void UnaryOperationsWithDifferentOperandsAreNotEqual()
+		{
+			var op1 = new Negation(One);
+			var op2 = new Negation(Two);
+
+			Assert.True(op1 != op2);
+			Assert.True(op2 != op1);
+		}
+
+		[Fact]
+		public static void UnaryOperationsWithDifferentOperatorsAreNotEqual()
+		{
+			var op1 = new Negation(One);
+			var op2 = new Sine(One);
+
+			Assert.True(op1 != op2);
+			Assert.True(op2 != op1);
+		}
+
+		[Fact]
+		public static void UnaryOperationsAreNotEqualToNull()
+		{
+			var op = new Negation(One);
+
+			Assert.False(op.Equals(null));
+			Assert.False(op == null);
+			Assert.False(null == op);
 		}
 	}
 }

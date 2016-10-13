@@ -72,11 +72,11 @@ namespace ZMath.Algebraic
 
 		public int CompareTo(object obj)
 		{
-			if (GetType() != obj.GetType())
-				throw new ArgumentException("Cannot compare, types differ");
-
 			if (obj == null)
 				return 1;
+			
+			if (GetType() != obj.GetType())
+				throw new ArgumentException("Cannot compare, types differ");
 
 			var n = (Number)obj;
 			return AsFloatingPt.CompareTo(n.AsFloatingPt);
@@ -108,6 +108,9 @@ namespace ZMath.Algebraic
 
 		public static bool operator ==(Number a, Number b)
 		{
+			if (a == null)
+				return b == null;
+			
 			return a.Equals(b);
 		}
 
@@ -118,11 +121,20 @@ namespace ZMath.Algebraic
 
 		public static bool operator >(Number a, Number b)
 		{
+			if (a == null)
+				return false;
+			
 			return a.CompareTo(b) > 0;
 		}
 
 		public static bool operator <(Number a, Number b)
 		{
+			if (a == null && b == null)
+				return false;
+			
+			if (a == null)
+				return true;
+			
 			return a.CompareTo(b) < 0;
 		}
 	}

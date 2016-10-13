@@ -164,6 +164,8 @@ namespace ZMath.Algebraic.Tests
 			Assert.False(n.Equals(null));
 			Assert.False(n == null);
 			Assert.True(n != null);
+			Assert.False(null == n);
+			Assert.True(null != n);
 		}
 
 		[Fact]
@@ -205,6 +207,28 @@ namespace ZMath.Algebraic.Tests
 
 			Assert.True(n2 > n1);
 			Assert.True(n1 < n2);
+		}
+
+		[Fact]
+		public static void AllIntsAreGreaterThanNull()
+		{
+			var n = new Number(int.MinValue);
+
+			Assert.True(n > null);
+			Assert.False(n < null);
+			Assert.False(null > n);
+			Assert.True(null < n);
+		}
+
+		[Fact]
+		public static void AllDoublesAreGreaterThanNull()
+		{
+			var n = new Number(double.MinValue);
+
+			Assert.True(n > null);
+			Assert.False(n < null);
+			Assert.False(null > n);
+			Assert.True(null < n);
 		}
 	}
 }
