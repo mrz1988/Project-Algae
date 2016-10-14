@@ -85,9 +85,4 @@ namespace ZMath.Algebraic
 			return true;
 		}
 	}
-
-	public class ValidationProcessor
-	{
-
-	}
 }
