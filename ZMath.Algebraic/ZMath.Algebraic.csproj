@@ -51,6 +51,7 @@
     <Compile Include="Expressions\Converters\Tokenizers\String\StringToPrimitiveTokenPipe.cs" />
     <Compile Include="Expressions\Converters\Tokenizers\String\ParsedSymbolToken.cs" />
     <Compile Include="Expressions\Converters\Tokenizers\String\Exceptions.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\String\TokenValidater.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />

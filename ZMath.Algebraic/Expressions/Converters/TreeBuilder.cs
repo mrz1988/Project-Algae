@@ -3,16 +3,6 @@ using System.Collections.Generic;
 
 namespace ZMath.Algebraic
 {
-	public class ParenthesisException : Exception
-	{
-		public ParenthesisException(string msg) : base(msg) { }
-	}
-
-	public class SymbolSyntaxException : Exception
-	{
-		public SymbolSyntaxException(string msg) : base(msg) { }
-	}
-
 	public class TreeBuilder
 	{
 		private List<SymbolToken> _tokens;
@@ -45,7 +35,7 @@ namespace ZMath.Algebraic
 		public Number ToNumber(SymbolToken token)
 		{
 			if (token.Type != SymbolType.Number)
-				throw new SymbolSyntaxException(string.Format("Unexpected symbol: {0}", token.Token));
+				throw new ArgumentException("Not a number", nameof(token));
 
 			var s = token.Token;
 			if (!s.Contains("."))
@@ -115,7 +105,7 @@ namespace ZMath.Algebraic
 		{
 			if (_tokens[1].Type != SymbolType.OpenBracket)
 			{
-				throw new SymbolSyntaxException("Expected an open bracket");
+				throw new InvalidOperationException("Malformed expression: expected open bracket");
 			}
 
 			var innerSymbols = new List<SymbolToken>();
@@ -131,7 +121,7 @@ namespace ZMath.Algebraic
 					parens--;
 
 				if (parens < 0)
-					throw new ParenthesisException("Mismatched close parenthesis");
+					throw new InvalidOperationException("Malformed expression: too many close brackets");
 				if (parens == 0)
 					break;
 			}
@@ -155,7 +145,7 @@ namespace ZMath.Algebraic
 					parens--;
 
 				if (parens < 0)
-					throw new ParenthesisException("Mismatched close parenthesis");
+					throw new InvalidOperationException("Malformed expression: too many close brackets");
 				if (parens > 0)
 					continue; // skip inner parens, they're done later
 				if (!token.Type.IsBinaryOperation())
@@ -170,7 +160,7 @@ namespace ZMath.Algebraic
 			}
 
 			if (lowestIx < 0)
-				throw new SymbolSyntaxException("Missing operator");
+				throw new InvalidOperationException("Malformed expression: missing operator");
 
 			var leftSide = _tokens.GetRange(0, lowestIx);
 			var op = _tokens[lowestIx];

@@ -32,10 +32,6 @@ namespace ZMath.Algebraic
 			if (val.Type == SymbolType.CloseBracket)
 				_parentheses--;
 
-			//TODO: Handle this better with position reporting!
-			if (_parentheses < 0)
-				throw new SymbolSyntaxException("Extra close parenthesis");
-
 			// Unary operations are the only case where an open parenthesis
 			// that applies to the negation may come as the second token.
 			// Unparsed negations also count, handled below as a special case
