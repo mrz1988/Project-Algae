@@ -40,5 +40,41 @@ namespace ZMath.Algebraic.Tests
 			Assert.Equal(6, e.Position);
 			Assert.Equal(9, e.Length);
 		}
+
+		[Fact]
+		public static void EmptyParenthesesThrow()
+		{
+			var e = Assert.Throws<InvalidParenthesisException>(() =>
+			{
+				StringTokenizer.Parse("()");
+			});
+
+			Assert.Equal(1, e.Position);
+			Assert.Equal(1, e.Length);
+		}
+
+		[Fact]
+		public static void EmptyParenthesesThrowInMiddle()
+		{
+			var e = Assert.Throws<InvalidParenthesisException>(() =>
+			{
+				StringTokenizer.Parse("4 + (()6");
+			});
+
+			Assert.Equal(6, e.Position);
+			Assert.Equal(1, e.Length);
+		}
+
+		[Fact]
+		public static void MismatchedParenthesesThrow()
+		{
+			var e = Assert.Throws<InvalidParenthesisException>(() =>
+			{
+				StringTokenizer.Parse("(3 + 5))");
+			});
+
+			Assert.Equal(7, e.Position);
+			Assert.Equal(1, e.Length);
+		}
 	}
 }

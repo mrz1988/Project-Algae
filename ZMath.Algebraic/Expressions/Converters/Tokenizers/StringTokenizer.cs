@@ -8,10 +8,11 @@ namespace ZMath.Algebraic
 		public static List<SymbolToken> Parse(string expression)
 		{
 			var pipe1 = new StringToPrimitiveTokenPipe(expression);
-			var pipe2 = new NegationProcessor(pipe1);
-			var pipe3 = new RedundantParenthesesProcessor(pipe2);
-			var pipe4 = new TokenValidater(pipe3);
-			return pipe4.PumpAll();
+			var pipe2 = new MatchAllParenthesesProcessor(pipe1);
+			var pipe3 = new NegationProcessor(pipe2);
+			var pipe4 = new RedundantParenthesesProcessor(pipe3);
+			var pipe5 = new TokenValidater(pipe4);
+			return pipe5.PumpAll();
 		}
 	}
 }

@@ -52,6 +52,7 @@
     <Compile Include="Expressions\Converters\Tokenizers\String\ParsedSymbolToken.cs" />
     <Compile Include="Expressions\Converters\Tokenizers\String\Exceptions.cs" />
     <Compile Include="Expressions\Converters\Tokenizers\String\TokenValidater.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\String\MatchAllParenthesesProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />

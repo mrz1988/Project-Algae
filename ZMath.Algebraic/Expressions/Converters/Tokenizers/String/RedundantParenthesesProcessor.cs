@@ -37,6 +37,11 @@ namespace ZMath.Algebraic
 				while (_heldInput[0].Type == SymbolType.OpenBracket &&
 				    _heldInput[_heldInput.Count - 1].Type == SymbolType.CloseBracket)
 				{
+					if (_heldInput.Count == 2)
+					{
+						var close = _heldInput[_heldInput.Count - 1];
+						throw new InvalidParenthesisException(close.Position);
+					}
 					_heldInput = _heldInput.GetRange(1, _heldInput.Count - 2);
 				}
 
@@ -82,24 +87,6 @@ namespace ZMath.Algebraic
 
 		protected override void Finish()
 		{
-			if (_heldInput.Count == 0)
-				return;
-
-			if (_heldInput.Count == 1)
-			{
-				Output(_heldInput[0]);
-			}
-			else
-			{
-				Output(SymbolToken.OpenBracket);
-				var pp = new RedundantParenthesesProcessor(_heldInput);
-				Output(pp.PumpAll());
-				for (int i = 0; i < _parentheses; i++)
-				{
-					Output(SymbolToken.CloseBracket);
-				}
-			}
-
 			_parentheses = 0;
 			_heldInput = new List<SymbolToken>();
 			_lastOutput = SymbolToken.OpenBracket;

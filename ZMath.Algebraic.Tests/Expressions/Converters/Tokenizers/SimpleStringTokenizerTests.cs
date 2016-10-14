@@ -176,5 +176,62 @@ namespace ZMath.Algebraic.Tests
 			Assert.Equal(3, e.Position);
 			Assert.Equal(5, e.Length);
 		}
+
+		[Fact]
+		public static void EmptyExpressionDoesNotThrow()
+		{
+			var result = StringTokenizer.Parse("");
+			Assert.Equal(result, new List<SymbolToken>());
+		}
+
+		[Fact]
+		public static void WhiteSpaceExpressionDoesNotThrow()
+		{
+			var result = StringTokenizer.Parse("   ");
+			Assert.Equal(result, new List<SymbolToken>());
+		}
+
+		[Fact]
+		public static void RedundantParenthesesAreRemovedFromNumbers()
+		{
+			var expected = new List<SymbolToken> {
+				SymbolTokens.Number(3)
+			};
+			var result = StringTokenizer.Parse("((3))");
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		public static void RedundantParenthesesAreRemovedFromExpressions()
+		{
+			var expected = new List<SymbolToken> {
+				SymbolTokens.Number(4),
+				SymbolTokens.Multiplication,
+				SymbolToken.OpenBracket,
+				SymbolTokens.Number(3),
+				SymbolTokens.Addition,
+				SymbolTokens.Number(5),
+				SymbolToken.CloseBracket
+			};
+			var result = StringTokenizer.Parse("4 * ((3 + 5) )  ");
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		public static void MissingParenthesesAreAutomaticallyAdded()
+		{
+			var expected = new List<SymbolToken> {
+				SymbolTokens.Number(4),
+				SymbolTokens.Multiplication,
+				SymbolToken.OpenBracket,
+				SymbolTokens.Number(3),
+				SymbolTokens.Addition,
+				SymbolTokens.Number(5),
+				SymbolToken.CloseBracket
+			};
+			var result = StringTokenizer.Parse("4 * ((3 + 5)  ");
+			Assert.Equal(expected, result);
+
+		}
 	}
 }
