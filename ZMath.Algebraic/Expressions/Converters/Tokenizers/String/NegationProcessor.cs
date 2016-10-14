@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using ZUtils.Pipes;
 
 namespace ZMath.Algebraic
@@ -11,12 +12,16 @@ namespace ZMath.Algebraic
 		private List<SymbolToken> _heldInput;
 		private int _parentheses = 0;
 
-		public NegationProcessor(IEnumerable<SymbolToken> input) : base(input) { }
-
-		protected override void Output(SymbolToken val)
+		public NegationProcessor(IEnumerable<SymbolToken> input) : base(input)
 		{
-			base.Output(val);
-			_lastOutput = val;
+			_heldInput = new List<SymbolToken>();
+			_lastOutput = SymbolToken.OpenBracket;
+		}
+
+		protected override void Output(SymbolToken item)
+		{
+			base.Output(item);
+			_lastOutput = item;
 		}
 
 		private void Hold(SymbolToken val)
@@ -37,12 +42,15 @@ namespace ZMath.Algebraic
 			{
 				var np = new NegationProcessor(_heldInput);
 				Output(np.PumpAll());
+				Output(SymbolToken.CloseBracket);
 				_heldInput = new List<SymbolToken>();
+				_holdInput = false;
 			}
 		}
 
-		public override void Consume(SymbolToken val)
+		protected override void Consume(SymbolToken val)
 		{
+			Contract.Requires(val != null);
 			if (_holdInput)
 			{
 				Hold(val);
@@ -52,30 +60,9 @@ namespace ZMath.Algebraic
 			if (_lastOutput.Type == SymbolType.Negation)
 			{
 				_holdInput = true;
+				Output(SymbolToken.OpenBracket);
 				Hold(val);
 				return;
-				if (val.Type.IsValue())
-				{
-					Output(SymbolToken.OpenBracket);
-					Output(val);
-					Output(SymbolToken.CloseBracket);
-				}
-
-				if (val.Type.IsUnaryOperation())
-				{
-					// Start new parentheses context (add open bracket)
-					// consume until close bracket is found into a list
-					// process the list with a new negation processor
-					// output all results
-					// output a close bracket
-				}
-
-				if (val.Type == SymbolType.Subtraction)
-				{
-					// special case, double negative.
-					// Add extra open parenthesis, and negation token
-					// consume 
-				}
 			}
 
 			if (val.Type != SymbolType.Subtraction)
@@ -84,96 +71,38 @@ namespace ZMath.Algebraic
 				return;
 			}
 
-			if (_lastOutput.Type == SymbolType.OpenBracket || _lastOutput.Type.IsBinaryOperation())
+			// There's some bug in (mono?) where
+			// it seems like the || statements don't short
+			// circuit, causing weird issues when _lastOutput == null.
+			// This works around that for now...
+			var isNegationToken = _lastOutput.Type == SymbolType.OpenBracket ||
+				_lastOutput.Type.IsBinaryOperation();
+			
+			if (isNegationToken)
 			{
 				Output(SymbolToken.NegationToken);
 				return;
 			}
-				
-			var revisedTokens = new List<SymbolToken>();
-			for (int i = 0; i < tokens.Count; i++)
-			{
-				var token = tokens[i];
-				if (token.Type != SymbolType.Subtraction)
-				{
-					revisedTokens.Add(token);
-					continue;
-				}
 
-				var prevType = i > 0 ? tokens[i - 1].Type : SymbolType.OpenBracket;
-				if (prevType == SymbolType.OpenBracket || prevType.IsBinaryOperation())
-				{
-					revisedTokens.Add(SymbolToken.NegationToken);
+			Output(val);
+			return;
+		}
 
-					var nextToken = tokens[i + 1];
-					if (nextToken.Type.IsValue())
-					{
-						revisedTokens.Add(SymbolToken.OpenBracket);
-						revisedTokens.Add(nextToken);
-						revisedTokens.Add(SymbolToken.CloseBracket);
-						i++;
-						continue;
-					}
+		protected override IEnumerable<SymbolToken> Finish()
+		{
+			var output = new List<SymbolToken>();
+			if (_heldInput.Count == 0)
+				return output;
 
-					var closesNeeded = 0;
-					if (nextToken.Type.IsUnaryOperation())
-					{
-						revisedTokens.Add(SymbolToken.OpenBracket);
-						revisedTokens.Add(nextToken);
-						i++;
-						closesNeeded++;
-					}
-					else if (nextToken.Type == SymbolType.Subtraction)
-					{
-						revisedTokens.Add(SymbolToken.OpenBracket);
-						revisedTokens.Add(SymbolToken.NegationToken);
-						i++;
-						closesNeeded++;
-					}
+			var np = new NegationProcessor(_heldInput);
+			output.AddRange(np.PumpAll());
+			output.Add(SymbolToken.CloseBracket);
+			_parentheses = 0;
+			_heldInput = new List<SymbolToken>();
+			_lastOutput = SymbolToken.OpenBracket;
+			_holdInput = false;
 
-					// we should be on an open bracket now, or there's
-					// a syntax error.
-					nextToken = tokens[i + 1];
-					if (nextToken.Type == SymbolType.Subtraction)
-					{
-
-					}
-					else if (nextToken.Type != SymbolType.OpenBracket)
-						throw new SymbolSyntaxException("Missing open parenthesis near negation");
-
-					if (!needsClose)
-						continue; //other parentheses will close themselves
-
-					// Add in the open bracket we're skipping
-					revisedTokens.Add(SymbolToken.OpenBracket);
-					// Skip to next valid token
-					i += 2;
-					var parentheses = 1;
-					var inner = new List<SymbolToken>();
-					while (parentheses > 0)
-					{
-						if (i == tokens.Count)
-							throw new IndexOutOfRangeException("Missing close parenthesis");
-						var cur = tokens[i];
-						if (cur.Type == SymbolType.CloseBracket)
-							parentheses--;
-						else if (cur.Type == SymbolType.OpenBracket)
-							parentheses++;
-						inner.Add(cur);
-						i++;
-					}
-
-					revisedTokens.AddRange(ProcessNegations(inner));
-					revisedTokens.Add(SymbolToken.CloseBracket);
-				}
-				else
-				{
-					// use as traditional subtraction operator
-					revisedTokens.Add(token);
-				}
-			}
-
-			return revisedTokens;
+			return output;
 		}
 	}
 }
