@@ -12,6 +12,7 @@ namespace ZUtils.Pipes
 		public AsymmetricPipe(IEnumerable<I> input)
 		{
 			_input = input.GetEnumerator();
+			_output = new Queue<O>();
 		}
 
 		public virtual List<O> PumpAll()
@@ -45,7 +46,7 @@ namespace ZUtils.Pipes
 			{
 				if (!_input.MoveNext())
 					return false;
-				Consume(_input.Current)
+				Consume(_input.Current);
 			}
 			return true;
 		}
