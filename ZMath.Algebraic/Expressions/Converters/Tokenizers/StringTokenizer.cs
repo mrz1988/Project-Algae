@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using ZUtils.Pipes;
 
 namespace ZMath.Algebraic
 {
-	public class InvalidTokenException : Exception
-	{
-		public InvalidTokenException(string message) : base(message) { }
-	}
-
 	public class StringTokenizer
 	{
 		public static List<SymbolToken> Parse(string expression)

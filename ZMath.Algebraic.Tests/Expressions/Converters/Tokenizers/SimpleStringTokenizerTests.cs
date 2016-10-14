@@ -145,19 +145,36 @@ namespace ZMath.Algebraic.Tests
 		[Fact]
 		public static void ChokesOnUnknownWord()
 		{
-			Assert.Throws<InvalidTokenException>(() =>
+			var e = Assert.Throws<UnrecognizedTokenException>(() =>
 			{
 				StringTokenizer.Parse("2 + foo(3)");
 			});
+			Assert.Equal(4, e.Position);
+			Assert.Equal(3, e.Length);
 		}
 
 		[Fact]
 		public static void ChokesOnUnknownSymbol()
 		{
-			Assert.Throws<InvalidTokenException>(() =>
+			var e = Assert.Throws<UnrecognizedTokenException>(() =>
 			{
 				StringTokenizer.Parse("2 ; 3");
 			});
+
+			Assert.Equal(2, e.Position);
+			Assert.Equal(1, e.Length);
+		}
+
+		[Fact]
+		public static void CanIdentifyCorrectPositionOfUnknownSymbol()
+		{
+			var e = Assert.Throws<UnrecognizedTokenException>(() =>
+			{
+				StringTokenizer.Parse("1+ abrex  ");
+			});
+
+			Assert.Equal(3, e.Position);
+			Assert.Equal(5, e.Length);
 		}
 	}
 }

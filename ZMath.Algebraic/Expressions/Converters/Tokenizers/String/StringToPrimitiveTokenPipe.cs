@@ -8,6 +8,8 @@ namespace ZMath.Algebraic
 	public class StringToPrimitiveTokenPipe : AsymmetricPipe<char, SymbolToken>
 	{
 		private StringBuilder _chars;
+		private int _charsParsed = 0;
+		private int _recentWhitespace = 0;
 
 		private bool _buildingNum = false;
 		private bool _buildingWord = false;
@@ -31,21 +33,21 @@ namespace ZMath.Algebraic
 		protected override void Consume(char val)
 		{
 			if (char.IsWhiteSpace(val))
+			{
+				_charsParsed++;
+				_recentWhitespace++;
 				return;
+			}
 
 			if (char.IsDigit(val) || val == '.')
-			{
 				ParseNumChar(val);
-				return;
-			}
-
-			if (SymbolicChars.Contains(val))
-			{
+			else if (SymbolicChars.Contains(val))
 				ParseSymbol(val);
-				return;
-			}
-
-			ParseWordChar(val);
+			else
+				ParseWordChar(val);
+			
+			_charsParsed++;
+			_recentWhitespace = 0;
 		}
 
 		protected override void Finish()
@@ -56,16 +58,23 @@ namespace ZMath.Algebraic
 				_chars = new StringBuilder();
 				ParseString(finalPart);
 			}
+			_charsParsed = 0;
+			_buildingNum = false;
+			_buildingWord = false;
 		}
 
 		private void ParseString(string s)
 		{
 			SymbolToken token;
 			var parsed = SymbolToken.TryParse(s, out token);
+			var pos = _charsParsed - s.Length - _recentWhitespace;
+			var len = s.Length;
 			if (parsed)
-				Output(token);
+				Output(token.SetPosition(pos, len));
 			else
-				throw new InvalidTokenException(s);
+			{
+				throw new UnrecognizedTokenException(pos, len, s);
+			}
 		}
 
 		private void ParseNumChar(char digit)

@@ -9,6 +9,10 @@ namespace ZMath.Algebraic
 		public SymbolType Type { get; private set; }
 		public string Token { get; private set; }
 
+		public int Position { get; private set; } = -1;
+		public int Length { get; private set; } = -1;
+		public bool HasPositionSet { get { return Position >= 0 && Length >= 0; } }
+
 		public static SymbolToken NegationToken { get { return new SymbolToken(SymbolType.Negation, "-"); } }
 		public static SymbolToken OpenBracket { get { return new SymbolToken(SymbolType.OpenBracket, "("); } }
 		public static SymbolToken CloseBracket { get { return new SymbolToken(SymbolType.CloseBracket, ")"); } }
@@ -79,6 +83,13 @@ namespace ZMath.Algebraic
 
 			token = null;
 			return false;
+		}
+
+		public SymbolToken SetPosition(int position, int length)
+		{
+			Position = position;
+			Length = length;
+			return this;
 		}
 
 		public override bool Equals(object obj)
