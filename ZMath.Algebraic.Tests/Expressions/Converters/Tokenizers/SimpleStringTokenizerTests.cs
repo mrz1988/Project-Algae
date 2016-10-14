@@ -166,7 +166,7 @@ namespace ZMath.Algebraic.Tests
 		}
 
 		[Fact]
-		public static void CanIdentifyCorrectPositionOfUnknownSymbol()
+		public static void CanIdentifyCorrectPositionOfUnknownWord()
 		{
 			var e = Assert.Throws<UnrecognizedTokenException>(() =>
 			{

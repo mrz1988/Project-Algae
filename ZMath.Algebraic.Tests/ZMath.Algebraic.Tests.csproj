@@ -38,6 +38,7 @@
     <Compile Include="Expressions\Converters\Tokenizers\SymbolTokenTests.cs" />
     <Compile Include="Expressions\Converters\Tokenizers\SymbolTokens.cs" />
     <Compile Include="Expressions\Converters\Tokenizers\ComplexStringTokenizerTests.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\StringTokenizerValidationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="xunit.abstractions">

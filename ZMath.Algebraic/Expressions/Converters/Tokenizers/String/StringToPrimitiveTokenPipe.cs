@@ -13,6 +13,7 @@ namespace ZMath.Algebraic
 
 		private bool _buildingNum = false;
 		private bool _buildingWord = false;
+		private bool _previouslyConsumedSymbol = false;
 
 		private static readonly List<char> SymbolicChars = new List<char> {
 			'+',
@@ -35,7 +36,8 @@ namespace ZMath.Algebraic
 			if (char.IsWhiteSpace(val))
 			{
 				_charsParsed++;
-				_recentWhitespace++;
+				if (!_previouslyConsumedSymbol)
+					_recentWhitespace++;
 				return;
 			}
 
@@ -45,9 +47,6 @@ namespace ZMath.Algebraic
 				ParseSymbol(val);
 			else
 				ParseWordChar(val);
-			
-			_charsParsed++;
-			_recentWhitespace = 0;
 		}
 
 		protected override void Finish()
@@ -67,8 +66,10 @@ namespace ZMath.Algebraic
 		{
 			SymbolToken token;
 			var parsed = SymbolToken.TryParse(s, out token);
-			var pos = _charsParsed - s.Length - _recentWhitespace;
+			var pos = _charsParsed - _recentWhitespace;
 			var len = s.Length;
+			_charsParsed += len;
+			_recentWhitespace = 0;
 			if (parsed)
 				Output(token.SetPosition(pos, len));
 			else
@@ -84,6 +85,7 @@ namespace ZMath.Algebraic
 
 			_buildingNum = true;
 			_chars.Append(digit);
+			_previouslyConsumedSymbol = false;
 		}
 
 		private void ParseWordChar(char letter)
@@ -93,6 +95,7 @@ namespace ZMath.Algebraic
 
 			_buildingWord = true;
 			_chars.Append(letter);
+			_previouslyConsumedSymbol = false;
 		}
 
 		private void ParseSymbol(char symbol)
@@ -102,6 +105,7 @@ namespace ZMath.Algebraic
 
 			// Assume all symbols are single-char
 			ParseString(symbol.ToString());
+			_previouslyConsumedSymbol = true;
 		}
 
 		private void CompleteToken()
