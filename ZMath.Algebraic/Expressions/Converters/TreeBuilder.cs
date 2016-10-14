@@ -101,35 +101,7 @@ namespace ZMath.Algebraic
 				"Support not written for binary operation: {0}", op.Type));
 		}
 
-		public ISymbol ParseAsUnaryOp()
-		{
-			if (_tokens[1].Type != SymbolType.OpenBracket)
-			{
-				throw new InvalidOperationException("Malformed expression: expected open bracket");
-			}
-
-			var innerSymbols = new List<SymbolToken>();
-			var parens = 1;
-			for (var i = 2; i < _tokens.Count; i++)
-			{
-				var token = _tokens[i];
-				innerSymbols.Add(token);
-
-				if (token.Type == SymbolType.OpenBracket)
-					parens++;
-				if (token.Type == SymbolType.CloseBracket)
-					parens--;
-
-				if (parens < 0)
-					throw new InvalidOperationException("Malformed expression: too many close brackets");
-				if (parens == 0)
-					break;
-			}
-
-			return ToUnaryOp(_tokens[0], innerSymbols);
-		}
-
-		public ISymbol ParseAsBinaryOp()
+		public ISymbol ParseAsOperation()
 		{
 			var parens = 0;
 			var lowestIx = -1;
@@ -148,8 +120,6 @@ namespace ZMath.Algebraic
 					throw new InvalidOperationException("Malformed expression: too many close brackets");
 				if (parens > 0)
 					continue; // skip inner parens, they're done later
-				if (!token.Type.IsBinaryOperation())
-					continue; // skip all numbers/unaries, they are special cased elsewhere
 
 				var order = token.Type.Order();
 				if (order < lowestOp)
@@ -162,11 +132,23 @@ namespace ZMath.Algebraic
 			if (lowestIx < 0)
 				throw new InvalidOperationException("Malformed expression: missing operator");
 
-			var leftSide = _tokens.GetRange(0, lowestIx);
 			var op = _tokens[lowestIx];
-			var rightSide = _tokens.GetRange(lowestIx + 1,
-				_tokens.Count - lowestIx - 1);
-			
+			if (op.Type.IsUnaryOperation())
+			{
+				// If you see the below exception, an assumption was wrong.
+				// It's assumed that all binary operations outside of parentheses
+				// will be consumed first, leaving unary operations for last.
+				// This would make the unary operation the first symbol.
+				// Sorry, this means you probably have bugs to fix :(
+				if (lowestIx != 0)
+					throw new InvalidOperationException("Unary operation seems to violate unary-first rule");
+
+				var param = _tokens.GetRange(1, _tokens.Count - 1);
+				return ToUnaryOp(op, param);
+			}
+			var leftSide = _tokens.GetRange(0, lowestIx);
+			var rightSide = _tokens.GetRange(lowestIx + 1, _tokens.Count - lowestIx - 1);
+
 			return ToBinaryOp(leftSide, op, rightSide);
 		}
 
@@ -178,19 +160,7 @@ namespace ZMath.Algebraic
 			if (len == 1)
 				return ToNumber(_tokens[0]);
 
-			// Case 2: Unary operation
-			if (_tokens[0].Type.IsUnaryOperation())
-			{
-				return ParseAsUnaryOp();
-			}
-
-			// Case 3: Binary operation
-			if (_tokens[0].Type.IsBinaryOperation())
-			{
-				return ParseAsBinaryOp();
-			}
-
-			throw new NotImplementedException();
+			return ParseAsOperation();
 		}
 	}
 }
