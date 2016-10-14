@@ -71,11 +71,11 @@ namespace ZMath.Algebraic.Tests
 				SymbolToken.OpenBracket,
 				SymbolToken.NegationToken,
 				SymbolToken.OpenBracket,
-				//SymbolToken.NegationToken,
+				SymbolToken.NegationToken,
 				SymbolToken.OpenBracket,
-				//SymbolTokens.Number(3),
-				//SymbolToken.CloseBracket,
-				//SymbolToken.CloseBracket,
+				SymbolTokens.Number(3),
+				SymbolToken.CloseBracket,
+				SymbolToken.CloseBracket,
 				SymbolToken.CloseBracket
 			};
 

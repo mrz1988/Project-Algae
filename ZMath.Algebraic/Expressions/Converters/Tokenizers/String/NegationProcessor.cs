@@ -36,6 +36,13 @@ namespace ZMath.Algebraic
 			if (_parentheses < 0)
 				throw new SymbolSyntaxException("Extra close parenthesis");
 
+			// Unary operations are the only case where an open parenthesis
+			// that applies to the negation may come as the second token.
+			// Unparsed negations also count, handled below as a special case
+			// (since they do not require parentheses)
+			if (_heldInput.Count == 1 && val.Type.IsUnaryOperation())
+				return;
+			
 			// be careful here: new, unparsed subtractions can be continued
 			// negation tokens. Be sure to handle those!
 			if (_parentheses == 0 && val.Type != SymbolType.Subtraction)
@@ -85,24 +92,20 @@ namespace ZMath.Algebraic
 			}
 
 			Output(val);
-			return;
 		}
 
-		protected override IEnumerable<SymbolToken> Finish()
+		protected override void Finish()
 		{
-			var output = new List<SymbolToken>();
 			if (_heldInput.Count == 0)
-				return output;
+				return;
 
 			var np = new NegationProcessor(_heldInput);
-			output.AddRange(np.PumpAll());
-			output.Add(SymbolToken.CloseBracket);
+			Output(np.PumpAll());
+			Output(SymbolToken.CloseBracket);
 			_parentheses = 0;
 			_heldInput = new List<SymbolToken>();
 			_lastOutput = SymbolToken.OpenBracket;
 			_holdInput = false;
-
-			return output;
 		}
 	}
 }

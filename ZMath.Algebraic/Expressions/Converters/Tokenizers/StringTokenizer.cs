@@ -14,125 +14,15 @@ namespace ZMath.Algebraic
 	{
 		public static List<SymbolToken> Parse(string expression)
 		{
-			List<SymbolToken> tokens;
-			if (!TryParse(expression, out tokens))
-				throw new ArgumentException("Could not parse", nameof(expression));
-
-			return tokens;
-		}
-
-		public static bool TryParse(string expression, out List<SymbolToken> tokens)
-		{
-			var tb = new StringToTokensProcessor();
-			foreach (char c in expression)
-			{
-				try
-				{
-					tb.ConsumeChar(c);
-				}
-				catch (InvalidTokenException)
-				{
-					tokens = null;
-					return false;
-				}
-			}
-
-			try
-			{
-				tokens = tb.Finish();
-				return true;
-			}
-			catch (InvalidTokenException)
-			{
-				tokens = null;
-				return false;
-			}
+			var pipe1 = new StringToPrimitiveTokenPipe(expression);
+			var pipe2 = new NegationProcessor(pipe1);
+			var pipe3 = new RedundantParenthesesProcessor(pipe2);
+			return pipe3.PumpAll();
 		}
 	}
 
 	public class StringToTokensProcessor
 	{
-		private StringBuilder _chars;
-		private List<SymbolToken> _tokens;
-
-		private bool _buildingNum = false;
-		private bool _buildingWord = false;
-
-		private static readonly List<char> SymbolicChars = new List<char> {
-			'+',
-			'-',
-			'*',
-			'/',
-			'^',
-			'(',
-			')'
-		};
-
-		public StringToTokensProcessor()
-		{
-			_chars = new StringBuilder();
-			_tokens = new List<SymbolToken>();
-		}
-
-		public void ConsumeChar(char character)
-		{
-			if (char.IsWhiteSpace(character))
-				return;
-
-			if (char.IsDigit(character) || character == '.')
-			{
-				ParseNumChar(character);
-				return;
-			}
-
-			if (SymbolicChars.Contains(character))
-			{
-				ParseSymbol(character);
-				return;
-			}
-
-			ParseWordChar(character);
-		}
-
-		public static List<SymbolToken> PostProcess(List<SymbolToken> firstPass)
-		{
-			// TODO
-			// fix logarithms/binary parenthesized ops
-
-			var secondPass = ProcessNegations(firstPass);
-			if (!Validate(secondPass))
-			{
-				throw new ArgumentException("Invalid");
-			}
-
-			return secondPass;
-		}
-
-		//TODO: This can use a refactor, it's pretty dense.
-		// The idea is this:
-		// Anywhere that a "minus sign (-)" exists, we need to
-		// determine if it meens "negative" or "subtract".
-		// If it is a negative, we have to insert parentheses
-		// and a negation sign so it looks something like this:
-		// -(innerStuff)
-		// This uses a bunch of tricks to figure out where to place
-		// the negation vs subraction signs, as well as any new necessary
-		// parentheses.
-		// It makes it much easier to parse into a tree later if we can
-		// standardize how unary/binary operations are tokenized.
-		// Unary:
-		// unaryOp ( param )
-		// Binary:
-		// left binaryOp right
-		// We require the above format for everything except negation and logarithms
-		// at the moment, but that's likely to break eventually...
-		private static List<SymbolToken> ProcessNegations(List<SymbolToken> tokens)
-		{
-			var pipe1 = new NegationProcessor(tokens);
-			var pipe2 = new RedundantParenthesesProcessor(pipe1);
-			return pipe2.PumpAll();
-		}
-
 		private static bool Validate(List<SymbolToken> tokens)
 		{
 			for (int i = 0; i < tokens.Count; i++)
@@ -193,71 +83,6 @@ namespace ZMath.Algebraic
 				}
 			}
 			return true;
-		}
-
-		public List<SymbolToken> Finish()
-		{
-			var finalPart = _chars.ToString();
-			if (finalPart.Length > 0)
-			{
-				_chars = new StringBuilder();
-				ParseString(finalPart);
-			}
-
-			return PostProcess(_tokens);
-		}
-
-		private void ParseNumChar(char digit)
-		{
-			if (_buildingWord)
-				CompleteToken();
-			
-			_buildingNum = true;
-			_chars.Append(digit);
-		}
-
-		private void ParseWordChar(char letter)
-		{
-			if (_buildingNum)
-				CompleteToken();
-
-			_buildingWord = true;
-			_chars.Append(letter);
-		}
-
-		private void CompleteToken()
-		{
-			var tokenString = _chars.ToString();
-
-			try
-			{
-				ParseString(tokenString);
-			}
-			finally
-			{
-				_chars = new StringBuilder();
-				_buildingNum = false;
-				_buildingWord = false;
-			}
-		}
-
-		private void ParseString(string s)
-		{
-			SymbolToken token;
-			var parsed = SymbolToken.TryParse(s, out token);
-			if (parsed)
-				_tokens.Add(token);
-			else
-				throw new InvalidTokenException(s);
-		}
-
-		private void ParseSymbol(char symbol)
-		{
-			if (_buildingNum || _buildingWord)
-				CompleteToken();
-
-			// Assume all symbols are single-char
-			ParseString(symbol.ToString());
 		}
 	}
 

@@ -38,7 +38,7 @@ namespace ZUtils.Pipes
 		}
 
 		protected abstract void Consume(I val);
-		protected abstract IEnumerable<O> Finish();
+		protected abstract void Finish();
 
 		private bool Pull()
 		{
@@ -58,9 +58,11 @@ namespace ZUtils.Pipes
 				yield return _output.Dequeue();
 			}
 
-			foreach (var output in Finish())
+			Finish();
+
+			while (_output.Count > 0)
 			{
-				yield return output;
+				yield return _output.Dequeue();
 			}
 		}
 

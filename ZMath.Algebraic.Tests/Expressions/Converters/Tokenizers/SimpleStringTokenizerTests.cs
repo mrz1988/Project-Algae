@@ -145,7 +145,7 @@ namespace ZMath.Algebraic.Tests
 		[Fact]
 		public static void ChokesOnUnknownWord()
 		{
-			Assert.Throws<ArgumentException>(() =>
+			Assert.Throws<InvalidTokenException>(() =>
 			{
 				StringTokenizer.Parse("2 + foo(3)");
 			});
@@ -154,7 +154,7 @@ namespace ZMath.Algebraic.Tests
 		[Fact]
 		public static void ChokesOnUnknownSymbol()
 		{
-			Assert.Throws<ArgumentException>(() =>
+			Assert.Throws<InvalidTokenException>(() =>
 			{
 				StringTokenizer.Parse("2 ; 3");
 			});

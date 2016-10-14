@@ -80,24 +80,23 @@ namespace ZMath.Algebraic
 			}
 		}
 
-		protected override IEnumerable<SymbolToken> Finish()
+		protected override void Finish()
 		{
-			var output = new List<SymbolToken>();
 			if (_heldInput.Count == 0)
-				return output;
+				return;
 
 			if (_heldInput.Count == 1)
 			{
-				output.Add(_heldInput[0]);
+				Output(_heldInput[0]);
 			}
 			else
 			{
-				output.Add(SymbolToken.OpenBracket);
+				Output(SymbolToken.OpenBracket);
 				var pp = new RedundantParenthesesProcessor(_heldInput);
-				output.AddRange(pp.PumpAll());
+				Output(pp.PumpAll());
 				for (int i = 0; i < _parentheses; i++)
 				{
-					output.Add(SymbolToken.CloseBracket);
+					Output(SymbolToken.CloseBracket);
 				}
 			}
 
@@ -105,8 +104,6 @@ namespace ZMath.Algebraic
 			_heldInput = new List<SymbolToken>();
 			_lastOutput = SymbolToken.OpenBracket;
 			_holdInput = false;
-
-			return output;
 		}
 	}
 }

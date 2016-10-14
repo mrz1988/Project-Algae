@@ -48,6 +48,7 @@
     <Compile Include="Expressions\SymbolTree\Operations\Negation.cs" />
     <Compile Include="Expressions\Converters\Tokenizers\String\NegationProcessor.cs" />
     <Compile Include="Expressions\Converters\Tokenizers\String\RedundantParenthesesProcessor.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\String\StringToPrimitiveTokenPipe.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />
