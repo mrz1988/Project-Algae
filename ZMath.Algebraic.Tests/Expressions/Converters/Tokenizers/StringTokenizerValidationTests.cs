@@ -22,11 +22,11 @@ namespace ZMath.Algebraic.Tests
 		{
 			var e = Assert.Throws<InvalidTokenException>(() =>
 			{
-				StringTokenizer.Parse("sin 2");
+				StringTokenizer.Parse("sin2");
 			});
 
-			Assert.Equal(e.Position, 3);
-			Assert.Equal(e.Length, 1);
+			Assert.Equal(3, e.Position);
+			Assert.Equal(1, e.Length);
 		}
 
 		[Fact]
@@ -37,8 +37,8 @@ namespace ZMath.Algebraic.Tests
 				StringTokenizer.Parse("1.3 + 123.34.56");
 			});
 
-			Assert.Equal(e.Position, 7);
-			Assert.Equal(e.Length, 9);
+			Assert.Equal(6, e.Position);
+			Assert.Equal(9, e.Length);
 		}
 	}
 }

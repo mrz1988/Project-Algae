@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 using ZUtils.Pipes;
 
 namespace ZMath.Algebraic
@@ -51,15 +52,11 @@ namespace ZMath.Algebraic
 
 		protected override void Finish()
 		{
-			var finalPart = _chars.ToString();
-			if (finalPart.Length > 0)
-			{
-				_chars = new StringBuilder();
-				ParseString(finalPart);
-			}
+			if (_buildingNum || _buildingWord)
+				CompleteToken();
+
 			_charsParsed = 0;
-			_buildingNum = false;
-			_buildingWord = false;
+			_recentWhitespace = 0;
 		}
 
 		private void ParseString(string s)
@@ -111,6 +108,17 @@ namespace ZMath.Algebraic
 		private void CompleteToken()
 		{
 			var tokenString = _chars.ToString();
+
+			if (_buildingNum)
+			{
+				var result = tokenString.Replace(".", "");
+				if (tokenString.Length - result.Length > 1)
+				{
+					var pos = _charsParsed - _recentWhitespace;
+					var len = tokenString.Length;
+					throw new InvalidTokenException(pos, len, "Multiple decimal points");
+				}
+			}
 
 			try
 			{
