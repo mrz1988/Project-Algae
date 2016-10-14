@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZMath.Algebraic", "ZMath.Al
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZMath.Algebraic.Tests", "ZMath.Algebraic.Tests\ZMath.Algebraic.Tests.csproj", "{9119A590-86DD-4325-B20F-DCD34AA4636D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZUtils", "ZUtils\ZUtils.csproj", "{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,5 +83,17 @@ Global
 		{9119A590-86DD-4325-B20F-DCD34AA4636D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{9119A590-86DD-4325-B20F-DCD34AA4636D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{9119A590-86DD-4325-B20F-DCD34AA4636D}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Release|iPhone.Build.0 = Release|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

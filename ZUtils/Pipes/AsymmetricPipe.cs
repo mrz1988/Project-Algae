@@ -14,7 +14,30 @@ namespace ZUtils.Pipes
 			_input = input.GetEnumerator();
 		}
 
-		public abstract void Consume(I val);
+		public virtual List<O> PumpAll()
+		{
+			var output = new List<O>();
+			foreach (var item in this)
+			{
+				output.Add(item);
+			}
+
+			return output;
+		}
+
+		protected virtual void Output(IEnumerable<O> items)
+		{
+			foreach (var i in items)
+				Output(i);
+		}
+
+		protected virtual void Output(O item)
+		{
+			_output.Enqueue(item);
+		}
+
+		protected abstract void Consume(I val);
+		protected abstract IEnumerable<O> Finish();
 
 		private bool Pull()
 		{
@@ -32,6 +55,11 @@ namespace ZUtils.Pipes
 			while (_output.Count > 0 || Pull())
 			{
 				yield return _output.Dequeue();
+			}
+
+			foreach (var output in Finish())
+			{
+				yield return output;
 			}
 		}
 

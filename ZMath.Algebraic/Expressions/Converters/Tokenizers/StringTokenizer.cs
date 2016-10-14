@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ZUtils.Pipes;
 
 namespace ZMath.Algebraic
 {
@@ -22,7 +23,7 @@ namespace ZMath.Algebraic
 
 		public static bool TryParse(string expression, out List<SymbolToken> tokens)
 		{
-			var tb = new StringTokenBuilder();
+			var tb = new StringToTokensProcessor();
 			foreach (char c in expression)
 			{
 				try
@@ -49,7 +50,7 @@ namespace ZMath.Algebraic
 		}
 	}
 
-	public class StringTokenBuilder
+	public class StringToTokensProcessor
 	{
 		private StringBuilder _chars;
 		private List<SymbolToken> _tokens;
@@ -67,7 +68,7 @@ namespace ZMath.Algebraic
 			')'
 		};
 
-		public StringTokenBuilder()
+		public StringToTokensProcessor()
 		{
 			_chars = new StringBuilder();
 			_tokens = new List<SymbolToken>();
@@ -152,19 +153,30 @@ namespace ZMath.Algebraic
 						continue;
 					}
 
-					var needsClose = false;
+					var closesNeeded = 0;
 					if (nextToken.Type.IsUnaryOperation())
 					{
 						revisedTokens.Add(SymbolToken.OpenBracket);
 						revisedTokens.Add(nextToken);
 						i++;
-						needsClose = true;
+						closesNeeded++;
+					}
+					else if (nextToken.Type == SymbolType.Subtraction)
+					{
+						revisedTokens.Add(SymbolToken.OpenBracket);
+						revisedTokens.Add(SymbolToken.NegationToken);
+						i++;
+						closesNeeded++;
 					}
 
 					// we should be on an open bracket now, or there's
 					// a syntax error.
 					nextToken = tokens[i + 1];
-					if (nextToken.Type != SymbolType.OpenBracket)
+					if (nextToken.Type == SymbolType.Subtraction)
+					{
+
+					}
+					else if (nextToken.Type != SymbolType.OpenBracket)
 						throw new SymbolSyntaxException("Missing open parenthesis near negation");
 
 					if (!needsClose)
@@ -328,5 +340,10 @@ namespace ZMath.Algebraic
 			// Assume all symbols are single-char
 			ParseString(symbol.ToString());
 		}
+	}
+
+	public class ValidationProcessor
+	{
+
 	}
 }

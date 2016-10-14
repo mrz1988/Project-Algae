@@ -46,6 +46,7 @@
     <Compile Include="Expressions\Converters\TreeBuilder.cs" />
     <Compile Include="Expressions\SymbolTree\SymbolTree.cs" />
     <Compile Include="Expressions\SymbolTree\Operations\Negation.cs" />
+    <Compile Include="Expressions\Converters\Tokenizers\String\NegationProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />
@@ -54,6 +55,13 @@
     <Folder Include="Expressions\SymbolTree\Operations\" />
     <Folder Include="Expressions\Converters\" />
     <Folder Include="Expressions\Converters\Tokenizers\" />
+    <Folder Include="Expressions\Converters\Tokenizers\String\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZUtils\ZUtils.csproj">
+      <Project>{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}</Project>
+      <Name>ZUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

@@ -62,5 +62,28 @@ namespace ZMath.Algebraic.Tests
 			var result = StringTokenizer.Parse("20 --(3 + 3 * 3)");
 			Assert.Equal(expected, result);
 		}
+
+		[Fact]
+		public static void CanTokenizeMultipleNegationSymbols()
+		{
+			var expected = new List<SymbolToken> {
+				SymbolToken.NegationToken,
+				SymbolToken.OpenBracket,
+				SymbolToken.NegationToken,
+				SymbolToken.OpenBracket,
+				SymbolToken.NegationToken,
+				SymbolToken.OpenBracket,
+				SymbolTokens.Number(3),
+				SymbolToken.CloseBracket,
+				SymbolToken.CloseBracket,
+				SymbolToken.CloseBracket
+			};
+
+			var result1 = StringTokenizer.Parse("---3");
+			var result2 = StringTokenizer.Parse("-(--3)");
+
+			Assert.Equal(expected, result1);
+			Assert.Equal(expected, result2);
+		}
 	}
 }
