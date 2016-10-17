@@ -15,6 +15,9 @@ namespace ZMath.Algebraic
 				return new VariableContext(new Dictionary<string, ISymbol> {
 					{ "pi", Number.Pi },
 					{ "e", Number.E },
+					{ "x", new Variable("x") },
+					{ "y", new Variable("y") },
+					{ "z", new Variable("z") },
 				});
 			}
 		}

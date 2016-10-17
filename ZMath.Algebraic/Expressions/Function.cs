@@ -1,12 +1,12 @@
 ﻿using System;
 namespace ZMath.Algebraic
 {
-	public class SymbolTree
+	public class Function
 	{
 		private ISymbol _root;
 		private VariableContext _ctx;
 
-		public SymbolTree(ISymbol root, VariableContext ctx)
+		public Function(ISymbol root, VariableContext ctx)
 		{
 			_root = root;
 			_ctx = ctx;
