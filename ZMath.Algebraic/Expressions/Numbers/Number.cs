@@ -65,6 +65,13 @@ namespace ZMath.Algebraic
 			_intVal = num;
 		}
 
+		public ISymbol Copy()
+		{
+			if (IsFloatingPt)
+				return new Number(AsFloatingPt);
+			return new Number(AsInt);
+		}
+
 		public Number GetValue()
 		{
 			return this;

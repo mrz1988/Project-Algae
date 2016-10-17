@@ -16,6 +16,7 @@ namespace ZMath.Algebraic
 
 		protected abstract Number Evaluate(double left, double right);
 		protected abstract Number Evaluate(int left, int right);
+		public abstract ISymbol Copy();
 
 		public Number GetValue()
 		{

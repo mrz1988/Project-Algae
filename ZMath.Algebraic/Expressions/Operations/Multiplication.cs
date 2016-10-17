@@ -7,6 +7,11 @@ namespace ZMath.Algebraic
 
 		public override SymbolType Type { get { return SymbolType.Multiplication; } }
 
+		public override ISymbol Copy()
+		{
+			return new Multiplication(_operand1.Copy(), _operand2.Copy());
+		}
+
 		protected override Number Evaluate(int left, int right)
 		{
 			return new Number(left * right);

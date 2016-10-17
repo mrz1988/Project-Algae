@@ -13,6 +13,7 @@ namespace ZMath.Algebraic
 
 		protected abstract Number Evaluate(int val);
 		protected abstract Number Evaluate(double val);
+		public abstract ISymbol Copy();
 
 		public Number GetValue()
 		{

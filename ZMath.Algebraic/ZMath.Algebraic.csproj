@@ -53,6 +53,7 @@
     <Compile Include="Tokenizers\FromString\TokenValidater.cs" />
     <Compile Include="Tokenizers\SymbolToken.cs" />
     <Compile Include="Tokenizers\FromString\StringTokenizer.cs" />
+    <Compile Include="Expressions\VariableContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />

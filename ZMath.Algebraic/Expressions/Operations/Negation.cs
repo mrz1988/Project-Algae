@@ -7,6 +7,11 @@ namespace ZMath.Algebraic
 
 		public override SymbolType Type { get { return SymbolType.Negation; } }
 
+		public override ISymbol Copy()
+		{
+			return new Negation(_child.Copy());
+		}
+
 		protected override Number Evaluate(int val)
 		{
 			return new Number(-val);

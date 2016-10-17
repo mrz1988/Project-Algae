@@ -7,6 +7,11 @@ namespace ZMath.Algebraic
 
 		public override SymbolType Type { get { return SymbolType.Cosine; } }
 
+		public override ISymbol Copy()
+		{
+			return new Cosine(_child.Copy());
+		}
+
 		protected override Number Evaluate(int val)
 		{
 			return new Number(Math.Cos(val));
