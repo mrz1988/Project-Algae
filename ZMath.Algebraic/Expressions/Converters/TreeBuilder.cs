@@ -122,7 +122,9 @@ namespace ZMath.Algebraic
 					continue; // skip inner parens, they're done later
 
 				var order = token.Type.Order();
-				if (order < lowestOp)
+
+				// Must be <= to adhere to left-to-right (right has to be considered lower than left)
+				if (order <= lowestOp)
 				{
 					lowestIx = i;
 					lowestOp = order;

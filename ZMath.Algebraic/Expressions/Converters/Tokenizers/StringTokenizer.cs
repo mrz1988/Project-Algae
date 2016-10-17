@@ -14,5 +14,12 @@ namespace ZMath.Algebraic
 			var pipe5 = new TokenValidater(pipe4);
 			return pipe5.PumpAll();
 		}
+
+		public static ISymbol BuildTreeFrom(string expression)
+		{
+			var tokens = Parse(expression);
+			var tb = new TreeBuilder(tokens);
+			return tb.Parse();
+		}
 	}
 }
