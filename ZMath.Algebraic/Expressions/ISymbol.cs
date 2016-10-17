@@ -7,5 +7,6 @@ namespace ZMath.Algebraic
 		SymbolType Type { get; }
 		ISymbol Copy();
 		bool CanEvaluate();
+		ISymbol MakeSubstitutions(VariableContext ctx);
 	}
 }

@@ -39,6 +39,31 @@ namespace ZMath.Algebraic
 			return _operand1.CanEvaluate() && _operand2.CanEvaluate();
 		}
 
+		public static ISymbol FromValues(SymbolType type, ISymbol operand1, ISymbol operand2)
+		{
+			switch (type)
+			{
+				case SymbolType.Addition:
+					return new Addition(operand1, operand2);
+				case SymbolType.Multiplication:
+					return new Multiplication(operand1, operand2);
+				case SymbolType.Division:
+					return new Division(operand1, operand2);
+				case SymbolType.Exponentiation:
+					return new Exponentiation(operand1, operand2);
+				default:
+					throw new ArgumentException("Not a valid binary symbol type", nameof(type));
+			}
+		}
+
+		public ISymbol MakeSubstitutions(VariableContext ctx)
+		{
+			var o1 = _operand1.MakeSubstitutions(ctx);
+			var o2 = _operand2.MakeSubstitutions(ctx);
+
+			return FromValues(Type, o1, o2);
+		}
+
 		public bool LeftEquals(ISymbol other)
 		{
 			return _operand1.Equals(other);

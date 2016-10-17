@@ -15,6 +15,29 @@ namespace ZMath.Algebraic
 		protected abstract Number Evaluate(double val);
 		public abstract ISymbol Copy();
 
+		public static ISymbol FromValues(SymbolType type, ISymbol child)
+		{
+			switch (type)
+			{
+				case SymbolType.Sine:
+					return new Sine(child);
+				case SymbolType.Cosine:
+					return new Cosine(child);
+				case SymbolType.Tangent:
+					return new Tangent(child);
+				case SymbolType.Negation:
+					return new Negation(child);
+				default:
+					throw new ArgumentException("Not a valid unary operation", nameof(type));
+			}
+		}
+
+		public ISymbol MakeSubstitutions(VariableContext ctx)
+		{
+			var child = _child.MakeSubstitutions(ctx);
+			return FromValues(Type, child);
+		}
+
 		public Number GetValue()
 		{
 			var val = _child.GetValue();

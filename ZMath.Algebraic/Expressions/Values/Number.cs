@@ -156,5 +156,10 @@ namespace ZMath.Algebraic
 				return AsFloatingPt.ToString();
 			return AsInt.ToString();
 		}
+
+		public ISymbol MakeSubstitutions(VariableContext ctx)
+		{
+			return Copy();
+		}
 	}
 }

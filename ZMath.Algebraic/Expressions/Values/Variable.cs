@@ -11,6 +11,11 @@ namespace ZMath.Algebraic
 			Name = name;
 		}
 
+		public ISymbol MakeSubstitutions(VariableContext ctx)
+		{
+			return ctx.Get(Name);
+		}
+
 		public Number GetValue()
 		{
 			throw new InvalidOperationException("Variables have no value");
