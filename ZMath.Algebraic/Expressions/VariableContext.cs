@@ -69,7 +69,9 @@ namespace ZMath.Algebraic
 				return _definedVars[name].Copy();
 			if (IsRegistered(name))
 				return _initMap[name].Copy();
-			
+
+			throw new KeyNotFoundException(string.Format(
+				"Variable name did not exist: {0}", name));
 		}
 	}
 }

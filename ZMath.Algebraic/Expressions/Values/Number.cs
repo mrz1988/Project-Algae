@@ -77,6 +77,11 @@ namespace ZMath.Algebraic
 			return this;
 		}
 
+		public bool CanEvaluate()
+		{
+			return true;
+		}
+
 		public int CompareTo(object obj)
 		{
 			if (obj == null)

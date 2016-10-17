@@ -25,6 +25,11 @@ namespace ZMath.Algebraic
 			return Evaluate(val.AsInt);
 		}
 
+		public bool CanEvaluate()
+		{
+			return _child.CanEvaluate();
+		}
+
 		public bool ChildEquals(ISymbol other)
 		{
 			return _child.Equals(other);

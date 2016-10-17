@@ -32,8 +32,8 @@
     <Compile Include="Expressions\ISymbol.cs" />
     <Compile Include="Expressions\SymbolTree.cs" />
     <Compile Include="Expressions\SymbolType.cs" />
-    <Compile Include="Expressions\Numbers\Number.cs" />
-    <Compile Include="Expressions\Numbers\NumberType.cs" />
+    <Compile Include="Expressions\Values\Number.cs" />
+    <Compile Include="Expressions\Values\NumberType.cs" />
     <Compile Include="Expressions\Operations\Addition.cs" />
     <Compile Include="Expressions\Operations\BinaryOperation.cs" />
     <Compile Include="Expressions\Operations\Cosine.cs" />
@@ -54,10 +54,11 @@
     <Compile Include="Tokenizers\SymbolToken.cs" />
     <Compile Include="Tokenizers\FromString\StringTokenizer.cs" />
     <Compile Include="Expressions\VariableContext.cs" />
+    <Compile Include="Expressions\Values\Variable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />
-    <Folder Include="Expressions\Numbers\" />
+    <Folder Include="Expressions\Values\" />
     <Folder Include="Expressions\Operations\" />
     <Folder Include="Tokenizers\" />
   </ItemGroup>

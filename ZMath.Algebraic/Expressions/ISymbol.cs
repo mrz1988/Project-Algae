@@ -6,5 +6,6 @@ namespace ZMath.Algebraic
 		Number GetValue();
 		SymbolType Type { get; }
 		ISymbol Copy();
+		bool CanEvaluate();
 	}
 }

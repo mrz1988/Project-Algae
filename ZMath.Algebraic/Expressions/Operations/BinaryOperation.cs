@@ -34,6 +34,11 @@ namespace ZMath.Algebraic
 			return Evaluate(left.AsInt, right.AsInt);
 		}
 
+		public bool CanEvaluate()
+		{
+			return _operand1.CanEvaluate() && _operand2.CanEvaluate();
+		}
+
 		public bool LeftEquals(ISymbol other)
 		{
 			return _operand1.Equals(other);
