@@ -25,5 +25,10 @@ namespace ZMath.Algebraic
 		{
 			return new Variable(Name);
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

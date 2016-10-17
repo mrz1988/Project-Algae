@@ -44,7 +44,7 @@ namespace ZMath.Algebraic
 
 		public static readonly List<string> ValidSymbols = SymbolicOperators.Keys.ToList();
 
-		protected SymbolToken(SymbolType type, string token)
+		public SymbolToken(SymbolType type, string token)
 		{
 			Type = type;
 			Token = token;

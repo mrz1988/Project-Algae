@@ -26,10 +26,13 @@ namespace ZMath.Algebraic
 			')'
 		};
 
-		public StringToPrimitiveTokenPipe(string input) : this(input.ToCharArray()) { }
-		public StringToPrimitiveTokenPipe(IEnumerable<char> input) : base(input)
+		private VariableContext _ctx;
+
+		public StringToPrimitiveTokenPipe(string input, VariableContext ctx) : this(input.ToCharArray(), ctx) { }
+		public StringToPrimitiveTokenPipe(IEnumerable<char> input, VariableContext ctx) : base(input)
 		{
 			_chars = new StringBuilder();
+			_ctx = ctx;
 		}
 
 		protected override void Consume(char val)
@@ -61,6 +64,12 @@ namespace ZMath.Algebraic
 
 		private void ParseString(string s)
 		{
+			if (_ctx.IsRegistered(s))
+			{
+				Output(_ctx.GetToken(s));
+				return;
+			}
+
 			SymbolToken token;
 			var parsed = SymbolToken.TryParse(s, out token);
 			var pos = _charsParsed - _recentWhitespace;

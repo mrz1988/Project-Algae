@@ -6,8 +6,9 @@ namespace ZMath.Algebraic
 	public class TreeBuilder
 	{
 		private List<SymbolToken> _tokens;
+		private VariableContext _ctx;
 
-		public TreeBuilder(List<SymbolToken> tokens)
+		public TreeBuilder(List<SymbolToken> tokens, VariableContext ctx)
 		{
 			_tokens = TrimParentheses(tokens);
 			if (_tokens.Count == 0)
@@ -18,6 +19,8 @@ namespace ZMath.Algebraic
 				throw new ArgumentException(string.Format("hanging token: {0}", tokens[0].Token),
 					nameof(tokens));
 			}
+
+			_ctx = ctx;
 		}
 
 		public static List<SymbolToken> TrimParentheses(List<SymbolToken> tokens)
@@ -32,10 +35,13 @@ namespace ZMath.Algebraic
 			return tokens;
 		}
 
-		public Number ToNumber(SymbolToken token)
+		public ISymbol ToValue(SymbolToken token)
 		{
-			if (token.Type != SymbolType.Number)
+			if (token.Type != SymbolType.Number && token.Type != SymbolType.Variable)
 				throw new ArgumentException("Not a number", nameof(token));
+
+			if (token.Type == SymbolType.Variable)
+				return _ctx.Get(token);
 
 			var s = token.Token;
 			if (!s.Contains("."))
@@ -53,7 +59,7 @@ namespace ZMath.Algebraic
 			if (!op.Type.IsUnaryOperation())
 				throw new ArgumentException("Not a unary operation", nameof(op));
 
-			var paramTreeBuilder = new TreeBuilder(parameter);
+			var paramTreeBuilder = new TreeBuilder(parameter, _ctx);
 			var paramTree = paramTreeBuilder.Parse();
 
 			switch (op.Type)
@@ -77,8 +83,8 @@ namespace ZMath.Algebraic
 			if (!op.Type.IsBinaryOperation())
 				throw new ArgumentException("Not a binary operation", nameof(op));
 			
-			var leftParamTreeBuilder = new TreeBuilder(leftTokens);
-			var rightParamTreeBuilder = new TreeBuilder(rightTokens);
+			var leftParamTreeBuilder = new TreeBuilder(leftTokens, _ctx);
+			var rightParamTreeBuilder = new TreeBuilder(rightTokens, _ctx);
 			var leftParam = leftParamTreeBuilder.Parse();
 			var rightParam = rightParamTreeBuilder.Parse();
 
@@ -158,9 +164,9 @@ namespace ZMath.Algebraic
 		{
 			var len = _tokens.Count;
 
-			// Case 1: Just a number remaining
+			// Case 1: Just a number or variable remaining
 			if (len == 1)
-				return ToNumber(_tokens[0]);
+				return ToValue(_tokens[0]);
 
 			return ParseAsOperation();
 		}

@@ -73,5 +73,19 @@ namespace ZMath.Algebraic
 			throw new KeyNotFoundException(string.Format(
 				"Variable name did not exist: {0}", name));
 		}
+
+		public ISymbol Get(SymbolToken token)
+		{
+			return Get(token.Token);
+		}
+
+		public SymbolToken GetToken(string name)
+		{
+			if (!IsRegistered(name))
+				throw new KeyNotFoundException(string.Format(
+					"Variable name did not exist: {0}", name));
+
+			return new SymbolToken(SymbolType.Variable, name);
+		}
 	}
 }

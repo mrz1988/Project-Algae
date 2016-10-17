@@ -7,7 +7,12 @@ namespace ZMath.Algebraic
 	{
 		public static List<SymbolToken> Parse(string expression)
 		{
-			var pipe1 = new StringToPrimitiveTokenPipe(expression);
+			return Parse(expression, VariableContext.Default);
+		}
+
+		public static List<SymbolToken> Parse(string expression, VariableContext context)
+		{
+			var pipe1 = new StringToPrimitiveTokenPipe(expression, context);
 			var pipe2 = new MatchAllParenthesesProcessor(pipe1);
 			var pipe3 = new NegationProcessor(pipe2);
 			var pipe4 = new RedundantParenthesesProcessor(pipe3);
@@ -17,8 +22,13 @@ namespace ZMath.Algebraic
 
 		public static ISymbol BuildTreeFrom(string expression)
 		{
-			var tokens = Parse(expression);
-			var tb = new TreeBuilder(tokens);
+			return BuildTreeFrom(expression, VariableContext.Default);
+		}
+
+		public static ISymbol BuildTreeFrom(string expression, VariableContext context)
+		{
+			var tokens = Parse(expression, context);
+			var tb = new TreeBuilder(tokens, context);
 			return tb.Parse();
 		}
 	}
