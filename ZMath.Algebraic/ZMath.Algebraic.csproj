@@ -28,40 +28,37 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Expressions\SymbolTree\ISymbol.cs" />
-    <Compile Include="Expressions\SymbolTree\Numbers\Number.cs" />
-    <Compile Include="Expressions\SymbolTree\Numbers\NumberType.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\BinaryOperation.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\UnaryOperation.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\Multiplication.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\Addition.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\Division.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\Exponentiation.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\Sine.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\Cosine.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\Tangent.cs" />
-    <Compile Include="Expressions\SymbolTree\SymbolType.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\SymbolToken.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\StringTokenizer.cs" />
-    <Compile Include="Expressions\Converters\TreeBuilder.cs" />
-    <Compile Include="Expressions\SymbolTree\SymbolTree.cs" />
-    <Compile Include="Expressions\SymbolTree\Operations\Negation.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\String\NegationProcessor.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\String\RedundantParenthesesProcessor.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\String\StringToPrimitiveTokenPipe.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\String\ParsedSymbolToken.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\String\Exceptions.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\String\TokenValidater.cs" />
-    <Compile Include="Expressions\Converters\Tokenizers\String\MatchAllParenthesesProcessor.cs" />
+    <Compile Include="Expressions\TreeBuilder.cs" />
+    <Compile Include="Expressions\ISymbol.cs" />
+    <Compile Include="Expressions\SymbolTree.cs" />
+    <Compile Include="Expressions\SymbolType.cs" />
+    <Compile Include="Expressions\Numbers\Number.cs" />
+    <Compile Include="Expressions\Numbers\NumberType.cs" />
+    <Compile Include="Expressions\Operations\Addition.cs" />
+    <Compile Include="Expressions\Operations\BinaryOperation.cs" />
+    <Compile Include="Expressions\Operations\Cosine.cs" />
+    <Compile Include="Expressions\Operations\Division.cs" />
+    <Compile Include="Expressions\Operations\Exponentiation.cs" />
+    <Compile Include="Expressions\Operations\Multiplication.cs" />
+    <Compile Include="Expressions\Operations\Negation.cs" />
+    <Compile Include="Expressions\Operations\Sine.cs" />
+    <Compile Include="Expressions\Operations\Tangent.cs" />
+    <Compile Include="Expressions\Operations\UnaryOperation.cs" />
+    <Compile Include="Tokenizers\FromString\Exceptions.cs" />
+    <Compile Include="Tokenizers\FromString\MatchAllParenthesesProcessor.cs" />
+    <Compile Include="Tokenizers\FromString\NegationProcessor.cs" />
+    <Compile Include="Tokenizers\FromString\ParsedSymbolToken.cs" />
+    <Compile Include="Tokenizers\FromString\RedundantParenthesesProcessor.cs" />
+    <Compile Include="Tokenizers\FromString\StringToPrimitiveTokenPipe.cs" />
+    <Compile Include="Tokenizers\FromString\TokenValidater.cs" />
+    <Compile Include="Tokenizers\SymbolToken.cs" />
+    <Compile Include="Tokenizers\FromString\StringTokenizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />
-    <Folder Include="Expressions\SymbolTree\" />
-    <Folder Include="Expressions\SymbolTree\Numbers\" />
-    <Folder Include="Expressions\SymbolTree\Operations\" />
-    <Folder Include="Expressions\Converters\" />
-    <Folder Include="Expressions\Converters\Tokenizers\" />
-    <Folder Include="Expressions\Converters\Tokenizers\String\" />
+    <Folder Include="Expressions\Numbers\" />
+    <Folder Include="Expressions\Operations\" />
+    <Folder Include="Tokenizers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZUtils\ZUtils.csproj">
