@@ -6,7 +6,7 @@ namespace ZMath.Algebraic
 	public class VariableContext
 	{
 		private Dictionary<string, ISymbol> _initMap;
-		private Dictionary<string, Number> _definedVars;
+		private Dictionary<string, ISymbol> _definedVars;
 
 		public static VariableContext ConstantsOnly
 		{
@@ -37,7 +37,7 @@ namespace ZMath.Algebraic
 		public VariableContext(Dictionary<string, ISymbol> mapping)
 		{
 			_initMap = mapping;
-			_definedVars = new Dictionary<string, Number>();
+			_definedVars = new Dictionary<string, ISymbol>();
 		}
 
 		public static VariableContext FromVariableNames(IEnumerable<string> variableNames)
@@ -58,14 +58,14 @@ namespace ZMath.Algebraic
 			_initMap[name] = symbol;
 		}
 
-		public void Define(string name, Number definition)
+		public void Define(string name, ISymbol definition)
 		{
 			_definedVars[name] = definition;
 		}
 
 		public void UndefineAll()
 		{
-			_definedVars = new Dictionary<string, Number>();
+			_definedVars = new Dictionary<string, ISymbol>();
 		}
 
 		public void Undefine(string name)

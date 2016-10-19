@@ -42,15 +42,17 @@ namespace ZMath.Algebraic
 			return Call(nums.ToArray());
 		}
 
-		public ISymbol Call(params Number[] vals)
+		public ISymbol Call(params ISymbol[] vals)
 		{
 			if (vals.Length != VariableCount)
 				throw new ArgumentException(string.Format(
 					"Must pass {0} variables into this function", VariableCount));
 			for (var i = 0; i < vals.Length; i++)
 			{
-
+				Substitute(VariableNames[i], vals[i]);
 			}
+
+			return Evaluate();
 		}
 	}
 }

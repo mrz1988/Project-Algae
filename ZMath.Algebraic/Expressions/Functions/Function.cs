@@ -12,7 +12,7 @@ namespace ZMath.Algebraic
 			_ctx = ctx;
 		}
 
-		public void Substitute(string variableName, Number substitution)
+		public void Substitute(string variableName, ISymbol substitution)
 		{
 			_ctx.Define(variableName, substitution);
 		}
