@@ -6,21 +6,20 @@ namespace ZMath.Algebraic
 	{
 		public string[] VariableNames { get; private set; }
 		public int VariableCount { get { return VariableNames.Length; } }
-		public MultiVariableFunction(ISymbol root, VariableContext ctx) : base(root, ctx) { }
 		public MultiVariableFunction(ISymbol root, params string[] variableNames)
 			: base(root, VariableContext.FromVariableNames(variableNames))
 		{
 			VariableNames = variableNames;
 		}
 
-		public static SingleVariableFunction FromString(string expression, params string[] variableNames)
+		public static MultiVariableFunction FromString(string expression, params string[] variableNames)
 		{
 			var ctx = VariableContext.FromVariableNames(variableNames);
 			var root = StringTokenizer.BuildTreeFrom(expression, ctx);
-			return new SingleVariableFunction(root, ctx);
+			return new MultiVariableFunction(root, variableNames);
 		}
 
-		public ISymbol Call(params double[] vals)
+		public Number Call(params double[] vals)
 		{
 			var nums = new List<Number>();
 			foreach (var val in vals)
@@ -31,7 +30,7 @@ namespace ZMath.Algebraic
 			return Call(nums.ToArray());
 		}
 
-		public ISymbol Call(params int[] vals)
+		public Number Call(params int[] vals)
 		{
 			var nums = new List<Number>();
 			foreach (var val in vals)
@@ -42,7 +41,7 @@ namespace ZMath.Algebraic
 			return Call(nums.ToArray());
 		}
 
-		public ISymbol Call(params ISymbol[] vals)
+		public Number Call(params ISymbol[] vals)
 		{
 			if (vals.Length != VariableCount)
 				throw new ArgumentException(string.Format(
@@ -52,7 +51,11 @@ namespace ZMath.Algebraic
 				Substitute(VariableNames[i], vals[i]);
 			}
 
-			return Evaluate();
+			var result = Evaluate();
+			if (result.Type != SymbolType.Number)
+				throw new EvaluationFailureException("Function did not reduce to a number");
+
+			return (Number)result;
 		}
 	}
 }

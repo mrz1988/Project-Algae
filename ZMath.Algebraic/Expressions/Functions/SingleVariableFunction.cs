@@ -6,7 +6,6 @@ namespace ZMath.Algebraic
 	public class SingleVariableFunction : Function
 	{
 		public string VariableName { get; private set; }
-		public SingleVariableFunction(ISymbol root, VariableContext ctx) : base(root, ctx) { }
 		public SingleVariableFunction(ISymbol root, string variableName)
 			: base(root, VariableContext.FromVariableNames(new List<string> { variableName }))
 		{
@@ -17,23 +16,27 @@ namespace ZMath.Algebraic
 		{
 			var ctx = VariableContext.FromVariableNames(new List<string> { variableName } );
 			var root = StringTokenizer.BuildTreeFrom(expression, ctx);
-			return new SingleVariableFunction(root, ctx);
+			return new SingleVariableFunction(root, variableName);
 		}
 
-		public ISymbol Call(double val)
+		public Number Call(double val)
 		{
 			return Call(new Number(val));
 		}
 
-		public ISymbol Call(int val)
+		public Number Call(int val)
 		{
 			return Call(new Number(val));
 		}
 
-		public ISymbol Call(Number val)
+		public Number Call(Number val)
 		{
 			Substitute(val);
-			return Evaluate();
+			var result = Evaluate();
+			if (result.Type != SymbolType.Number)
+				throw new EvaluationFailureException("Function did not reduce to a number");
+
+			return (Number)result;
 		}
 
 		public void Substitute(Number val)

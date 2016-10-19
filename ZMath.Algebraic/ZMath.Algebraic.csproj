@@ -57,6 +57,7 @@
     <Compile Include="Expressions\Functions\Function.cs" />
     <Compile Include="Expressions\Functions\SingleVariableFunction.cs" />
     <Compile Include="Expressions\Functions\MultiVariableFunction.cs" />
+    <Compile Include="Expressions\Exceptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />

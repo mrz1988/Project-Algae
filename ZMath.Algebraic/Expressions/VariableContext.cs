@@ -40,6 +40,16 @@ namespace ZMath.Algebraic
 			_definedVars = new Dictionary<string, ISymbol>();
 		}
 
+		public static VariableContext FromVariableNames(string varName)
+		{
+			return FromVariableNames(new string[] {varName});
+		}
+
+		public static VariableContext FromVariableNames(string var1, string var2)
+		{
+			return FromVariableNames(new string[] { var1, var2 });
+		}
+
 		public static VariableContext FromVariableNames(IEnumerable<string> variableNames)
 		{
 			var ctx = ConstantsOnly;
