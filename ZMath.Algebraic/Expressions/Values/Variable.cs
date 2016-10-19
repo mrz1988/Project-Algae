@@ -35,5 +35,33 @@ namespace ZMath.Algebraic
 		{
 			return Name;
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+				return false;
+
+			Variable v = (Variable)obj;
+
+			return v.Type == Type && v.Name == Name;
+		}
+
+		public override int GetHashCode()
+		{
+			return Name.GetHashCode();
+		}
+
+		public static bool operator ==(Variable a, Variable b)
+		{
+			if (a == null)
+				return b == null;
+
+			return a.Equals(b);
+		}
+
+		public static bool operator !=(Variable a, Variable b)
+		{
+			return !(a == b);
+		}
 	}
 }

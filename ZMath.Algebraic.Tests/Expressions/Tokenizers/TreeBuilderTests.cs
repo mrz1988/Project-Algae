@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace ZMath.Algebraic.Tests
@@ -112,6 +113,44 @@ namespace ZMath.Algebraic.Tests
 			Assert.Equal(14, result1);
 			Assert.Equal(13, result2);
 			Assert.Equal(0, result3);
+		}
+
+		[Fact]
+		public static void CanBuildTreeWithVariable()
+		{
+			var expected = new Addition(
+				new Variable("x"),
+				new Multiplication(
+					new Number(2),
+					new Variable("x")
+				)
+			);
+
+			var ctx = new VariableContext(new Dictionary<string, ISymbol> {
+				{ "x", new Variable("x") }
+			});
+			var result = StringTokenizer.BuildTreeFrom("x + 2*x", ctx);
+
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		public static void FailsToBuildTreeWithUnrecognizedVariable()
+		{
+			Assert.Throws<UnrecognizedTokenException>(() => {
+				StringTokenizer.BuildTreeFrom("x + 2");
+			});
+		}
+
+		[Fact]
+		public static void CanBuildTreeWithConstants()
+		{
+			var expected = new Number(1);
+
+			var tree = StringTokenizer.BuildTreeFrom("cos(2*pi)");
+
+			Assert.True(tree.CanEvaluate());
+			Assert.Equal(expected, tree.GetValue());
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace ZMath.Algebraic
 			if (_tokens.Count == 0)
 				throw new ArgumentException("missing token", nameof(tokens));
 			
-			if (_tokens.Count == 1 && _tokens[0].Type != SymbolType.Number)
+			if (_tokens.Count == 1 && !_tokens[0].Type.IsValue())
 			{
 				throw new ArgumentException(string.Format("hanging token: {0}", tokens[0].Token),
 					nameof(tokens));
