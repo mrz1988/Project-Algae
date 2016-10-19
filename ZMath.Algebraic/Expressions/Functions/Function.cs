@@ -3,8 +3,8 @@ namespace ZMath.Algebraic
 {
 	public class Function
 	{
-		private ISymbol _root;
-		private VariableContext _ctx;
+		protected ISymbol _root;
+		protected VariableContext _ctx;
 
 		public Function(ISymbol root, VariableContext ctx)
 		{

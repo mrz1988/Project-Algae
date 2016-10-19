@@ -8,6 +8,17 @@ namespace ZMath.Algebraic
 		private Dictionary<string, ISymbol> _initMap;
 		private Dictionary<string, Number> _definedVars;
 
+		public static VariableContext ConstantsOnly
+		{
+			get
+			{
+				return new VariableContext(new Dictionary<string, ISymbol> {
+					{ "pi", Number.Pi },
+					{ "e", Number.E }
+				});
+			}
+		}
+
 		public static VariableContext Default
 		{
 			get
@@ -27,6 +38,17 @@ namespace ZMath.Algebraic
 		{
 			_initMap = mapping;
 			_definedVars = new Dictionary<string, Number>();
+		}
+
+		public static VariableContext FromVariableNames(IEnumerable<string> variableNames)
+		{
+			var ctx = ConstantsOnly;
+			foreach (var name in variableNames)
+			{
+				ctx.Register(name, new Variable(name));
+			}
+
+			return ctx;
 		}
 
 		public void Register(string name, ISymbol symbol)

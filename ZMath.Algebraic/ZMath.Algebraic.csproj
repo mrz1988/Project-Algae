@@ -30,7 +30,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Expressions\TreeBuilder.cs" />
     <Compile Include="Expressions\ISymbol.cs" />
-    <Compile Include="Expressions\Function.cs" />
     <Compile Include="Expressions\SymbolType.cs" />
     <Compile Include="Expressions\Values\Number.cs" />
     <Compile Include="Expressions\Values\NumberType.cs" />
@@ -55,12 +54,16 @@
     <Compile Include="Tokenizers\FromString\StringTokenizer.cs" />
     <Compile Include="Expressions\VariableContext.cs" />
     <Compile Include="Expressions\Values\Variable.cs" />
+    <Compile Include="Expressions\Functions\Function.cs" />
+    <Compile Include="Expressions\Functions\SingleVariableFunction.cs" />
+    <Compile Include="Expressions\Functions\MultiVariableFunction.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Expressions\" />
     <Folder Include="Expressions\Values\" />
     <Folder Include="Expressions\Operations\" />
     <Folder Include="Tokenizers\" />
+    <Folder Include="Expressions\Functions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZUtils\ZUtils.csproj">

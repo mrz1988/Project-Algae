@@ -7,7 +7,7 @@ namespace ZMath.Algebraic
 	{
 		public static List<SymbolToken> Parse(string expression)
 		{
-			return Parse(expression, VariableContext.Default);
+			return Parse(expression, VariableContext.ConstantsOnly);
 		}
 
 		public static List<SymbolToken> Parse(string expression, VariableContext context)
@@ -22,7 +22,7 @@ namespace ZMath.Algebraic
 
 		public static ISymbol BuildTreeFrom(string expression)
 		{
-			return BuildTreeFrom(expression, VariableContext.Default);
+			return BuildTreeFrom(expression, VariableContext.ConstantsOnly);
 		}
 
 		public static ISymbol BuildTreeFrom(string expression, VariableContext context)
