@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace ZMath.Algebraic.Tests
 {
+    [TestFixture]
 	public static class ComplexStringTokenizerTests
 	{
-		[Fact]
+		[Test]
 		public static void CanTokenizeMultipleAdditions()
 		{
 			var expected = new List<SymbolToken> {
@@ -21,10 +21,10 @@ namespace ZMath.Algebraic.Tests
 			};
 
 			var result = StringTokenizer.Parse("23 +41 +-100.5");
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanTokenizeWithNegatedUnary()
 		{
 			var expected = new List<SymbolToken> {
@@ -40,10 +40,10 @@ namespace ZMath.Algebraic.Tests
 			};
 
 			var result = StringTokenizer.Parse("20 * -sin(123.45)");
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanTokenizeNegatedParenthesizedExpression()
 		{
 			var expected = new List<SymbolToken> {
@@ -60,10 +60,10 @@ namespace ZMath.Algebraic.Tests
 			};
 
 			var result = StringTokenizer.Parse("20 --(3 + 3 * 3)");
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanTokenizeMultipleNegationSymbols()
 		{
 			var expected = new List<SymbolToken> {
@@ -82,8 +82,8 @@ namespace ZMath.Algebraic.Tests
 			var result1 = StringTokenizer.Parse("---3");
 			var result2 = StringTokenizer.Parse("-(--3)");
 
-			Assert.Equal(expected, result1);
-			Assert.Equal(expected, result2);
+			Assert.AreEqual(expected, result1);
+			Assert.AreEqual(expected, result2);
 		}
 	}
 }

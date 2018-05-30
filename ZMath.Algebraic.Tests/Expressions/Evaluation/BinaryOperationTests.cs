@@ -1,8 +1,8 @@
-﻿using System;
-using Xunit;
+﻿using NUnit.Framework;
 
 namespace ZMath.Algebraic.Tests
 {
+    [TestFixture]
 	public class BinaryOperationTests
 	{
 		private static Number Two { get { return new Number(2); } }
@@ -10,7 +10,7 @@ namespace ZMath.Algebraic.Tests
 		private static Number Five { get { return new Number(5); } }
 		private static Number Three { get { return new Number(3); } }
 
-		[Fact]
+		[Test]
 		public static void CanAddTwoNumbers()
 		{
 			var val1 = 10;
@@ -21,10 +21,10 @@ namespace ZMath.Algebraic.Tests
 			var num2 = new Number(val2);
 			var addition = new Addition(num1, num2);
 
-			Assert.Equal(sum, addition.GetValue().AsInt);
+			Assert.AreEqual(sum, addition.GetValue().AsInt);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanAddThreeNumbers()
 		{
 			var val1 = 1;
@@ -39,17 +39,17 @@ namespace ZMath.Algebraic.Tests
 			var nestedAddition = new Addition(num2, num3);
 			var addition = new Addition(num1, nestedAddition);
 
-			Assert.Equal(sum, addition.GetValue().AsInt);
+			Assert.AreEqual(sum, addition.GetValue().AsInt);
 		}
 
-		[Fact]
+		[Test]
 		public static void AdditionHasCorrectType()
 		{
 			var addition = new Addition(One, One);
-			Assert.Equal(SymbolType.Addition, addition.Type);
+			Assert.AreEqual(SymbolType.Addition, addition.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanMultiplyTwoNumbers()
 		{
 			var val1 = 10;
@@ -60,17 +60,17 @@ namespace ZMath.Algebraic.Tests
 			var num2 = new Number(val2);
 			var mult = new Multiplication(num1, num2);
 
-			Assert.Equal(product, mult.GetValue().AsInt);
+			Assert.AreEqual(product, mult.GetValue().AsInt);
 		}
 
-		[Fact]
+		[Test]
 		public static void MultiplicationHasCorrectType()
 		{
 			var multiplication = new Multiplication(One, One);
-			Assert.Equal(SymbolType.Multiplication, multiplication.Type);
+			Assert.AreEqual(SymbolType.Multiplication, multiplication.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanDivideTwoIntegersWithNoRemainder()
 		{
 			var val1 = 20;
@@ -81,10 +81,10 @@ namespace ZMath.Algebraic.Tests
 			var num2 = new Number(val2);
 			var div = new Division(num1, num2);
 
-			Assert.Equal(quotient, div.GetValue().AsInt);
+			Assert.AreEqual(quotient, div.GetValue().AsInt);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanDivideTwoIntegersWithRemainder()
 		{
 			int val1 = 5;
@@ -95,32 +95,32 @@ namespace ZMath.Algebraic.Tests
 			var num2 = new Number(val2);
 			var div = new Division(num1, num2);
 
-			Assert.Equal(quotient, div.GetValue().AsFloatingPt);
+			Assert.AreEqual(quotient, div.GetValue().AsFloatingPt);
 		}
 
-		[Fact]
+		[Test]
 		public static void DivisionHasCorrectType()
 		{
 			var div = new Division(One, One);
-			Assert.Equal(SymbolType.Division, div.Type);
+			Assert.AreEqual(SymbolType.Division, div.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanSquareANumber()
 		{
 			var exp = new Exponentiation(Five, Two);
 
-			Assert.Equal(25, exp.GetValue().AsInt);
+			Assert.AreEqual(25, exp.GetValue().AsInt);
 		}
 
-		[Fact]
+		[Test]
 		public static void ExponentiationHasCorrectType()
 		{
 			var exp = new Exponentiation(One, One);
-			Assert.Equal(SymbolType.Exponentiation, exp.Type);
+			Assert.AreEqual(SymbolType.Exponentiation, exp.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanEquateBinaryOperations()
 		{
 			var op1 = new Addition(One, Two);
@@ -131,18 +131,20 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(op2.Equals(op1));
 		}
 
-		[Fact]
+		[Test]
 		public static void CanEquateBinaryOperationsWithOperator()
 		{
 			var op1 = new Multiplication(Two, Two);
 			var op2 = new Multiplication(Two, Two);
 
 			Assert.True(op1 == op2);
+#pragma warning disable CS1718 // Comparison made to same variable
 			Assert.True(op1 == op1);
+#pragma warning restore CS1718 // Comparison made to same variable
 			Assert.True(op2 == op1);
 		}
 
-		[Fact]
+		[Test]
 		public static void BinaryOperationsWithDifferentOperandsAreNotEqual()
 		{
 			var op1 = new Addition(One, One);
@@ -157,7 +159,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(op3 != op1);
 		}
 
-		[Fact]
+		[Test]
 		public static void BinaryOperationsWithDifferentOperatorsAreNotEqual()
 		{
 			var op1 = new Addition(One, One);
@@ -166,7 +168,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(op1 != op2);
 		}
 
-		[Fact]
+		[Test]
 		public static void BinaryOperationsAreNotEqualToTheirResults()
 		{
 			var op1 = new Addition(One, One);
@@ -175,7 +177,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.False(op1 == Two);
 		}
 
-		[Fact]
+		[Test]
 		public static void BinaryOperationsAreNotEqualToNull()
 		{
 			var op1 = new Addition(One, One);
@@ -185,7 +187,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.False(null == op1);
 		}
 
-		[Fact]
+		[Test]
 		public static void BinaryOperationsCanCompareToUnaryOperations()
 		{
 			var op1 = new Addition(One, One);

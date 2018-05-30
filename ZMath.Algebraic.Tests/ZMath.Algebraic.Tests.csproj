@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props')" />
   <PropertyGroup>
@@ -37,23 +37,14 @@
     <Compile Include="Expressions\Tokenizers\ComplexStringTokenizerTests.cs" />
     <Compile Include="Expressions\Tokenizers\SimpleStringTokenizerTests.cs" />
     <Compile Include="Expressions\Tokenizers\StringTokenizerValidationTests.cs" />
-    <Compile Include="Expressions\Tokenizers\SymbolTokens.cs" />
+    <Compile Include="Expressions\Tokenizers\Helpers\SymbolTokens.cs" />
     <Compile Include="Expressions\Tokenizers\SymbolTokenTests.cs" />
     <Compile Include="Expressions\Tokenizers\TreeBuilderTests.cs" />
     <Compile Include="Expressions\Evaluation\FunctionTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="xunit.abstractions">
-      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert">
-      <HintPath>..\packages\xunit.assert.2.1.0\lib\portable-net45+win8+wp8+wpa81\xunit.assert.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.core">
-      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\portable-net45+win8+wp8+wpa81\xunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.execution.dotnet">
-      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\portable-net45+win8+wp8+wpa81\xunit.execution.dotnet.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.5.18109, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.5\lib\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -65,10 +56,6 @@
       <Name>ZMath.Algebraic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Expressions\" />
-    <Folder Include="Expressions\Evaluation\" />
-    <Folder Include="Expressions\Tokenizers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

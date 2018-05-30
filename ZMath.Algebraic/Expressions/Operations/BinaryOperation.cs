@@ -76,7 +76,7 @@ namespace ZMath.Algebraic
 
 		public override bool Equals(object obj)
 		{
-			if (obj == null || GetType() != obj.GetType())
+			if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
 				return false;
 
 			BinaryOperation op = (BinaryOperation)obj;
@@ -99,8 +99,8 @@ namespace ZMath.Algebraic
 
 		public static bool operator ==(BinaryOperation a, ISymbol b)
 		{
-			if (a == null)
-				return b == null;
+			if (ReferenceEquals(a, null))
+				return ReferenceEquals(b, null);
 			
 			return a.Equals(b);
 		}

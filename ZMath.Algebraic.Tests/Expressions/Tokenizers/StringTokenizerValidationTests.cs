@@ -1,11 +1,11 @@
-﻿using System;
-using Xunit;
+﻿using NUnit.Framework;
 
 namespace ZMath.Algebraic.Tests
 {
+    [TestFixture]
 	public static class StringTokenizerValidationTests
 	{
-		[Fact]
+		[Test]
 		public static void CannotHaveConsecutiveBinaryOperators()
 		{
 			var e = Assert.Throws<InvalidTokenException>(() =>
@@ -13,11 +13,11 @@ namespace ZMath.Algebraic.Tests
 				StringTokenizer.Parse("2 ++3");
 			});
 
-			Assert.Equal(3, e.Position);
-			Assert.Equal(1, e.Length);
+			Assert.AreEqual(3, e.Position);
+			Assert.AreEqual(1, e.Length);
 		}
 
-		[Fact]
+		[Test]
 		public static void UnaryOperatorMustHaveParenthesisFollowing()
 		{
 			var e = Assert.Throws<InvalidTokenException>(() =>
@@ -25,11 +25,11 @@ namespace ZMath.Algebraic.Tests
 				StringTokenizer.Parse("sin2");
 			});
 
-			Assert.Equal(3, e.Position);
-			Assert.Equal(1, e.Length);
+			Assert.AreEqual(3, e.Position);
+			Assert.AreEqual(1, e.Length);
 		}
 
-		[Fact]
+		[Test]
 		public static void NumbersCannotHaveMultipleDecimalPoints()
 		{
 			var e = Assert.Throws<InvalidTokenException>(() =>
@@ -37,11 +37,11 @@ namespace ZMath.Algebraic.Tests
 				StringTokenizer.Parse("1.3 + 123.34.56");
 			});
 
-			Assert.Equal(6, e.Position);
-			Assert.Equal(9, e.Length);
+			Assert.AreEqual(6, e.Position);
+			Assert.AreEqual(9, e.Length);
 		}
 
-		[Fact]
+		[Test]
 		public static void EmptyParenthesesThrow()
 		{
 			var e = Assert.Throws<InvalidParenthesisException>(() =>
@@ -49,11 +49,11 @@ namespace ZMath.Algebraic.Tests
 				StringTokenizer.Parse("()");
 			});
 
-			Assert.Equal(1, e.Position);
-			Assert.Equal(1, e.Length);
+			Assert.AreEqual(1, e.Position);
+			Assert.AreEqual(1, e.Length);
 		}
 
-		[Fact]
+		[Test]
 		public static void EmptyParenthesesThrowInMiddle()
 		{
 			var e = Assert.Throws<InvalidParenthesisException>(() =>
@@ -61,11 +61,11 @@ namespace ZMath.Algebraic.Tests
 				StringTokenizer.Parse("4 + (()6");
 			});
 
-			Assert.Equal(6, e.Position);
-			Assert.Equal(1, e.Length);
+			Assert.AreEqual(6, e.Position);
+			Assert.AreEqual(1, e.Length);
 		}
 
-		[Fact]
+		[Test]
 		public static void MismatchedParenthesesThrow()
 		{
 			var e = Assert.Throws<InvalidParenthesisException>(() =>
@@ -73,8 +73,8 @@ namespace ZMath.Algebraic.Tests
 				StringTokenizer.Parse("(3 + 5))");
 			});
 
-			Assert.Equal(7, e.Position);
-			Assert.Equal(1, e.Length);
+			Assert.AreEqual(7, e.Position);
+			Assert.AreEqual(1, e.Length);
 		}
 	}
 }

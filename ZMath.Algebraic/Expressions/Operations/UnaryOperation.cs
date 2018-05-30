@@ -60,7 +60,7 @@ namespace ZMath.Algebraic
 
 		public override bool Equals(object obj)
 		{
-			if (obj == null || GetType() != obj.GetType())
+			if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
 				return false;
 
 			UnaryOperation op = (UnaryOperation)obj;
@@ -82,8 +82,8 @@ namespace ZMath.Algebraic
 
 		public static bool operator ==(UnaryOperation a, ISymbol b)
 		{
-			if (a == null)
-				return b == null;
+			if (ReferenceEquals(a, null))
+				return ReferenceEquals(b, null);
 			
 			return a.Equals(b);
 		}

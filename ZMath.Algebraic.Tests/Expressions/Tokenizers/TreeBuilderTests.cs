@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace ZMath.Algebraic.Tests
 {
+    [TestFixture]
 	public static class TreeBuilderTests
 	{
-		[Fact]
+		[Test]
 		public static void CanBuildAdditionTree()
 		{
 			var expected = new Addition(
@@ -16,20 +16,20 @@ namespace ZMath.Algebraic.Tests
 
 			var result = StringTokenizer.BuildTreeFrom("3 + 3");
 
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildNegationTree()
 		{
 			var expected = new Negation(new Number(3));
 
 			var result = StringTokenizer.BuildTreeFrom("-3");
 
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildSubtractionTree()
 		{
 			var expected = new Addition(
@@ -40,10 +40,10 @@ namespace ZMath.Algebraic.Tests
 			);
 
 			var result = StringTokenizer.BuildTreeFrom("3 - 3");
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildNestedNegationTree()
 		{
 			var expected = new Addition(
@@ -56,10 +56,10 @@ namespace ZMath.Algebraic.Tests
 			);
 
 			var result = StringTokenizer.BuildTreeFrom("3 -- 3");
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildSimpleOrderOfOperations()
 		{
 			var expected = new Addition(
@@ -80,10 +80,10 @@ namespace ZMath.Algebraic.Tests
 			);
 			var result = StringTokenizer.BuildTreeFrom("3 + 2 * 5 + 1 * (10 + 3)");
 
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanSolveSimpleOrderOfOperations()
 		{
 			var tree1 = StringTokenizer.BuildTreeFrom("6+7*8");
@@ -94,12 +94,12 @@ namespace ZMath.Algebraic.Tests
 			var result2 = tree2.GetValue().AsInt;
 			var result3 = tree3.GetValue().AsInt;
 
-			Assert.Equal(62, result1);
-			Assert.Equal(0, result2);
-			Assert.Equal(42, result3);
+			Assert.AreEqual(62, result1);
+			Assert.AreEqual(0, result2);
+			Assert.AreEqual(42, result3);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanSolveMediumOrderOfOperations()
 		{
 			var tree1 = StringTokenizer.BuildTreeFrom("3 + 6 * (5 + 4) / 3 - 7");
@@ -110,12 +110,12 @@ namespace ZMath.Algebraic.Tests
 			var result2 = tree2.GetValue().AsInt;
 			var result3 = tree3.GetValue().AsInt;
 
-			Assert.Equal(14, result1);
-			Assert.Equal(13, result2);
-			Assert.Equal(0, result3);
+			Assert.AreEqual(14, result1);
+			Assert.AreEqual(13, result2);
+			Assert.AreEqual(0, result3);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildTreeWithVariable()
 		{
 			var expected = new Addition(
@@ -131,10 +131,10 @@ namespace ZMath.Algebraic.Tests
 			});
 			var result = StringTokenizer.BuildTreeFrom("x + 2*x", ctx);
 
-			Assert.Equal(expected, result);
+			Assert.AreEqual(expected, result);
 		}
 
-		[Fact]
+		[Test]
 		public static void FailsToBuildTreeWithUnrecognizedVariable()
 		{
 			Assert.Throws<UnrecognizedTokenException>(() => {
@@ -142,7 +142,7 @@ namespace ZMath.Algebraic.Tests
 			});
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildTreeWithConstants()
 		{
 			var expected = new Number(1);
@@ -150,7 +150,7 @@ namespace ZMath.Algebraic.Tests
 			var tree = StringTokenizer.BuildTreeFrom("cos(2*pi)");
 
 			Assert.True(tree.CanEvaluate());
-			Assert.Equal(expected, tree.GetValue());
+			Assert.AreEqual(expected, tree.GetValue());
 		}
 	}
 }

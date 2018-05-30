@@ -1,41 +1,42 @@
 ﻿using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace ZMath.Algebraic.Tests
 {
+    [TestFixture]
 	public static class UnaryOperationTests
 	{
 		private static Number One { get { return new Number(1); } }
 		private static Number Two { get { return new Number(2); } }
 
-		[Fact]
+		[Test]
 		public static void CanNegateInteger()
 		{
 			var num = 1;
 			var negated = -1;
 
 			var negation = new Negation(new Number(num));
-			Assert.Equal(negated, negation.GetValue().AsInt);
+			Assert.AreEqual(negated, negation.GetValue().AsInt);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanNegateDouble()
 		{
 			var num = 3.56;
 			var negated = -3.56;
 
 			var negation = new Negation(new Number(num));
-			Assert.Equal(negated, negation.GetValue().AsFloatingPt);
+			Assert.AreEqual(negated, negation.GetValue().AsFloatingPt);
 		}
 
-		[Fact]
+		[Test]
 		public static void NegationHasCorrectType()
 		{
 			var negation = new Negation(One);
-			Assert.Equal(SymbolType.Negation, negation.Type);
+			Assert.AreEqual(SymbolType.Negation, negation.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanSine()
 		{
 			var num1 = 1;
@@ -47,18 +48,18 @@ namespace ZMath.Algebraic.Tests
 			var sin1 = new Sine(new Number(num1));
 			var sin2 = new Sine(Number.Pi);
 
-			Assert.Equal(result1, sin1.GetValue().AsFloatingPt);
-			Assert.Equal(result2, sin2.GetValue().AsFloatingPt);
+			Assert.AreEqual(result1, sin1.GetValue().AsFloatingPt);
+			Assert.AreEqual(result2, sin2.GetValue().AsFloatingPt);
 		}
 
-		[Fact]
+		[Test]
 		public static void SineHasCorrectType()
 		{
 			var sine = new Sine(One);
-			Assert.Equal(SymbolType.Sine, sine.Type);
+			Assert.AreEqual(SymbolType.Sine, sine.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanCosine()
 		{
 			var num1 = 1;
@@ -70,18 +71,18 @@ namespace ZMath.Algebraic.Tests
 			var cos1 = new Cosine(new Number(num1));
 			var cos2 = new Cosine(Number.Pi);
 
-			Assert.Equal(result1, cos1.GetValue().AsFloatingPt);
-			Assert.Equal(result2, cos2.GetValue().AsFloatingPt);
+			Assert.AreEqual(result1, cos1.GetValue().AsFloatingPt);
+			Assert.AreEqual(result2, cos2.GetValue().AsFloatingPt);
 		}
 
-		[Fact]
+		[Test]
 		public static void CosineHasCorrectType()
 		{
 			var cosine = new Cosine(One);
-			Assert.Equal(SymbolType.Cosine, cosine.Type);
+			Assert.AreEqual(SymbolType.Cosine, cosine.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanTangent()
 		{
 			var num1 = 1;
@@ -93,18 +94,18 @@ namespace ZMath.Algebraic.Tests
 			var tan1 = new Tangent(new Number(num1));
 			var tan2 = new Tangent(new Number(num2));
 
-			Assert.Equal(result1, tan1.GetValue().AsFloatingPt);
-			Assert.Equal(result2, tan2.GetValue().AsFloatingPt);
+			Assert.AreEqual(result1, tan1.GetValue().AsFloatingPt);
+			Assert.AreEqual(result2, tan2.GetValue().AsFloatingPt);
 		}
 
-		[Fact]
+		[Test]
 		public static void TangentHasCorrectType()
 		{
 			var tangent = new Tangent(One);
-			Assert.Equal(SymbolType.Tangent, tangent.Type);
+			Assert.AreEqual(SymbolType.Tangent, tangent.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void UnaryOperationsAreEquatable()
 		{
 			var op1 = new Negation(One);
@@ -114,7 +115,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(op1 == op2);
 		}
 
-		[Fact]
+		[Test]
 		public static void UnaryOperationsWithDifferentOperandsAreNotEqual()
 		{
 			var op1 = new Negation(One);
@@ -124,7 +125,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(op2 != op1);
 		}
 
-		[Fact]
+		[Test]
 		public static void UnaryOperationsWithDifferentOperatorsAreNotEqual()
 		{
 			var op1 = new Negation(One);
@@ -134,7 +135,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(op2 != op1);
 		}
 
-		[Fact]
+		[Test]
 		public static void UnaryOperationsAreNotEqualToNull()
 		{
 			var op = new Negation(One);

@@ -1,56 +1,56 @@
 ﻿using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace ZMath.Algebraic.Tests
 {
 	public static class SymbolTokenTests
 	{
-		[Fact]
+		[Test]
 		public static void CanBuildAdditionToken()
 		{
-			Assert.Equal(SymbolType.Addition, SymbolTokens.Addition.Type);
+			Assert.AreEqual(SymbolType.Addition, SymbolTokens.Addition.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildSubractionToken()
 		{
-			Assert.Equal(SymbolType.Subtraction, SymbolTokens.Subtraction.Type);
+			Assert.AreEqual(SymbolType.Subtraction, SymbolTokens.Subtraction.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildMultiplicationToken()
 		{
-			Assert.Equal(SymbolType.Multiplication, SymbolTokens.Multiplication.Type);
+			Assert.AreEqual(SymbolType.Multiplication, SymbolTokens.Multiplication.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildDivisionToken()
 		{
-			Assert.Equal(SymbolType.Division, SymbolTokens.Division.Type);
+			Assert.AreEqual(SymbolType.Division, SymbolTokens.Division.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildExponentiationToken()
 		{
-			Assert.Equal(SymbolType.Exponentiation, SymbolTokens.Exponentiation.Type);
+			Assert.AreEqual(SymbolType.Exponentiation, SymbolTokens.Exponentiation.Type);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildInt()
 		{
 			var val = 237;
 			var result = SymbolTokens.Number(val);
-			Assert.Equal(SymbolType.Number, result.Type);
-			Assert.Equal(val.ToString(), result.Token);
+			Assert.AreEqual(SymbolType.Number, result.Type);
+			Assert.AreEqual(val.ToString(), result.Token);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanBuildDouble()
 		{
 			var val = Math.PI;
 			var result = SymbolTokens.Number(val);
-			Assert.Equal(SymbolType.Number, result.Type);
-			Assert.Equal(val.ToString(), result.Token);
+			Assert.AreEqual(SymbolType.Number, result.Type);
+			Assert.AreEqual(val.ToString(), result.Token);
 		}
 	}
 }

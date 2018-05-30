@@ -1,11 +1,12 @@
 ﻿using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace ZMath.Algebraic.Tests
 {
+    [TestFixture]
 	public static class SymbolTypeTests
 	{
-		[Fact]
+		[Test]
 		public static void AllSymbolTypesAreCategorized()
 		{
 			foreach (SymbolType type in Enum.GetValues(typeof(SymbolType)))
@@ -18,7 +19,7 @@ namespace ZMath.Algebraic.Tests
 			}
 		}
 
-		[Fact]
+		[Test]
 		public static void AllSymbolTypesHaveOrder()
 		{
 			foreach (SymbolType type in Enum.GetValues(typeof(SymbolType)))
@@ -27,31 +28,31 @@ namespace ZMath.Algebraic.Tests
 			}
 		}
 
-		[Fact]
+		[Test]
 		public static void AdditionAndSubtractionHaveSameOrder()
 		{
-			Assert.Equal(SymbolType.Addition.Order(), SymbolType.Subtraction.Order());
+			Assert.AreEqual(SymbolType.Addition.Order(), SymbolType.Subtraction.Order());
 		}
 
-		[Fact]
+		[Test]
 		public static void DivisionAndMultiplicationHaveSameOrder()
 		{
-			Assert.Equal(SymbolType.Multiplication.Order(), SymbolType.Division.Order());
+			Assert.AreEqual(SymbolType.Multiplication.Order(), SymbolType.Division.Order());
 		}
 
-		[Fact]
+		[Test]
 		public static void MultiplicationTrumpsAddition()
 		{
 			Assert.True(SymbolType.Multiplication.Order() > SymbolType.Addition.Order());
 		}
 
-		[Fact]
+		[Test]
 		public static void ExponentiationTrumpsMultiplication()
 		{
 			Assert.True(SymbolType.Exponentiation.Order() > SymbolType.Multiplication.Order());
 		}
 
-		[Fact]
+		[Test]
 		public static void AllUnaryOperationsHaveSameOrder()
 		{
 			var order = SymbolType.Negation.Order();
@@ -60,12 +61,12 @@ namespace ZMath.Algebraic.Tests
 			{
 				if (type.IsUnaryOperation())
 				{
-					Assert.Equal(order, type.Order());
+					Assert.AreEqual(order, type.Order());
 				}
 			}
 		}
 
-		[Fact]
+		[Test]
 		public static void UnaryOperationsHavePrecedence()
 		{
 			Assert.True(SymbolType.Negation.Order() > SymbolType.Exponentiation.Order());

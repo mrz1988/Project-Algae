@@ -120,8 +120,8 @@ namespace ZMath.Algebraic
 
 		public static bool operator ==(Number a, Number b)
 		{
-			if (a == null)
-				return b == null;
+			if (ReferenceEquals(a, null))
+				return ReferenceEquals(b, null);
 			
 			return a.Equals(b);
 		}

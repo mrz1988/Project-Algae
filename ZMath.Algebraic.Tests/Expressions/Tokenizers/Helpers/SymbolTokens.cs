@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 namespace ZMath.Algebraic.Tests
 {
 	public static class SymbolTokens

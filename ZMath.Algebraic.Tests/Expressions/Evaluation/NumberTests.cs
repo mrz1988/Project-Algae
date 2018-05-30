@@ -1,44 +1,44 @@
-﻿using System;
-using Xunit;
+﻿using NUnit.Framework;
 
 namespace ZMath.Algebraic.Tests
 {
+    [TestFixture]
 	public static class NumberTests
 	{
-		[Fact]
+		[Test]
 		public static void CanStoreFetchInt()
 		{
 			var n = new Number(5);
-			Assert.Equal(5, n.AsInt);
+			Assert.AreEqual(5, n.AsInt);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanStoreFetchDouble()
 		{
 			double val = 10.5;
 			var n = new Number(val);
-			Assert.Equal(val, n.AsFloatingPt);
+			Assert.AreEqual(val, n.AsFloatingPt);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanStoreIntFetchDouble()
 		{
 			int val = 10;
 			double valAsFloat = (double)val;
 			var n = new Number(val);
-			Assert.Equal(valAsFloat, n.AsFloatingPt);
+			Assert.AreEqual(valAsFloat, n.AsFloatingPt);
 		}
 
-		[Fact]
+		[Test]
 		public static void CanStoreDoubleFetchInt()
 		{
 			double val = 10.5;
 			int valAsInt = (int)val;
 			var n = new Number(val);
-			Assert.Equal(valAsInt, n.AsInt);
+			Assert.AreEqual(valAsInt, n.AsInt);
 		}
 
-		[Fact]
+		[Test]
 		public static void IntsAreEquatable()
 		{
 			var n1 = new Number(3);
@@ -52,7 +52,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n3b.Equals(n3a));
 		}
 
-		[Fact]
+		[Test]
 		public static void IntsAreEquatableByOperator()
 		{
 			var n1 = new Number(3);
@@ -66,7 +66,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n3b == n3a);
 		}
 
-		[Fact]
+		[Test]
 		public static void ExactDoublesAreEquatable()
 		{
 			var n1 = Number.Pi;
@@ -80,7 +80,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n3b.Equals(n3a));
 		}
 
-		[Fact]
+		[Test]
 		public static void ExactDoublesAreEquatableByOperator()
 		{
 			var n1 = Number.Pi;
@@ -94,7 +94,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n3b == n3a);
 		}
 
-		[Fact]
+		[Test]
 		public static void CloseDoublesAreEquatable()
 		{
 			var n1 = new Number(10.1);
@@ -104,7 +104,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n2.Equals(n1));
 		}
 
-		[Fact]
+		[Test]
 		public static void CloseDoublesAreEquatableByOperator()
 		{
 			var n1 = new Number(10.1);
@@ -114,7 +114,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n2 == n1);
 		}
 
-		[Fact]
+		[Test]
 		public static void IntsCanBeNotEqual()
 		{
 			var n1 = new Number(1);
@@ -126,7 +126,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n2 != n1);
 		}
 
-		[Fact]
+		[Test]
 		public static void DoublesCanBeNotEqual()
 		{
 			var n1 = new Number(0.1);
@@ -137,7 +137,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n2 != n1);
 		}
 
-		[Fact]
+		[Test]
 		public static void SemiCloseDoublesCanBeNotEqual()
 		{
 			var n1 = new Number(0.1000000);
@@ -148,7 +148,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n2 != n1);
 		}
 
-		[Fact]
+		[Test]
 		public static void IntsCannotEqualNull()
 		{
 			var n = new Number(0);
@@ -157,7 +157,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n != null);
 		}
 
-		[Fact]
+		[Test]
 		public static void DoublesCannotEqualNull()
 		{
 			var n = Number.Pi;
@@ -168,7 +168,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(null != n);
 		}
 
-		[Fact]
+		[Test]
 		public static void DoublesCanEqualInts()
 		{
 			var n1 = new Number(1);
@@ -179,7 +179,7 @@ namespace ZMath.Algebraic.Tests
 		}
 
 
-		[Fact]
+		[Test]
 		public static void IntsCanBeGreaterThanOthers()
 		{
 			var n1 = new Number(0);
@@ -189,7 +189,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n2 < n1);
 		}
 
-		[Fact]
+		[Test]
 		public static void DoublesCanBeGreaterThanOthers()
 		{
 			var n1 = new Number(1.0);
@@ -199,7 +199,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n1 < n2);
 		}
 
-		[Fact]
+		[Test]
 		public static void DoublesCanCompareToInts()
 		{
 			var n1 = new Number(1);
@@ -209,7 +209,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(n1 < n2);
 		}
 
-		[Fact]
+		[Test]
 		public static void AllIntsAreGreaterThanNull()
 		{
 			var n = new Number(int.MinValue);
@@ -220,7 +220,7 @@ namespace ZMath.Algebraic.Tests
 			Assert.True(null < n);
 		}
 
-		[Fact]
+		[Test]
 		public static void AllDoublesAreGreaterThanNull()
 		{
 			var n = new Number(double.MinValue);
