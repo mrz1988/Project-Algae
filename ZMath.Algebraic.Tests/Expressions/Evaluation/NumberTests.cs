@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using ZMath.Algebraic.Values;
 
 namespace ZMath.Algebraic.Tests
 {
@@ -60,8 +61,10 @@ namespace ZMath.Algebraic.Tests
 			var n3a = new Number(-3);
 			var n3b = new Number(-3);
 
+#pragma warning disable CS1718 // Comparison made to same variable
 			Assert.True(n1 == n1);
 			Assert.True(n2 == n2);
+#pragma warning restore CS1718 // Comparison made to same variable
 			Assert.True(n3a == n3b);
 			Assert.True(n3b == n3a);
 		}
@@ -88,8 +91,10 @@ namespace ZMath.Algebraic.Tests
 			var n3a = new Number(0.1);
 			var n3b = new Number(0.1);
 
+#pragma warning disable CS1718 // Comparison made to same variable
 			Assert.True(n1 == n1);
 			Assert.True(n2 == n2);
+#pragma warning restore CS1718 // Comparison made to same variable
 			Assert.True(n3a == n3b);
 			Assert.True(n3b == n3a);
 		}

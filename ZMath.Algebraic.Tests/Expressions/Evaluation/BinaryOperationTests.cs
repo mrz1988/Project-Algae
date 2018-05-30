@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using ZMath.Algebraic.Values;
+using ZMath.Algebraic.Operations;
 
 namespace ZMath.Algebraic.Tests
 {

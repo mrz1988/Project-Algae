@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZMath.Algebraic.Values;
 
-namespace ZMath.Algebraic
+namespace ZMath.Algebraic.Functions
 {
 	public class SingleVariableFunction : Function
 	{

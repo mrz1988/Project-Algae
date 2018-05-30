@@ -1,5 +1,6 @@
-﻿using System;
-namespace ZMath.Algebraic
+﻿using ZMath.Algebraic.Values;
+
+namespace ZMath.Algebraic.Operations
 {
 	public class Negation : UnaryOperation
 	{

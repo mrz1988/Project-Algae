@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -27,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Expressions\Constraints\SymbolConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Expressions\TreeBuilder.cs" />
     <Compile Include="Expressions\ISymbol.cs" />
@@ -46,7 +47,6 @@
     <Compile Include="Tokenizers\FromString\Exceptions.cs" />
     <Compile Include="Tokenizers\FromString\MatchAllParenthesesProcessor.cs" />
     <Compile Include="Tokenizers\FromString\NegationProcessor.cs" />
-    <Compile Include="Tokenizers\FromString\ParsedSymbolToken.cs" />
     <Compile Include="Tokenizers\FromString\RedundantParenthesesProcessor.cs" />
     <Compile Include="Tokenizers\FromString\StringToPrimitiveTokenPipe.cs" />
     <Compile Include="Tokenizers\FromString\TokenValidater.cs" />
@@ -59,13 +59,7 @@
     <Compile Include="Expressions\Functions\MultiVariableFunction.cs" />
     <Compile Include="Expressions\Exceptions.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Expressions\" />
-    <Folder Include="Expressions\Values\" />
-    <Folder Include="Expressions\Operations\" />
-    <Folder Include="Tokenizers\" />
-    <Folder Include="Expressions\Functions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ZUtils\ZUtils.csproj">
       <Project>{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}</Project>

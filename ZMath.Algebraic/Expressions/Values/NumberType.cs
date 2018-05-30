@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ZMath.Algebraic
+namespace ZMath.Algebraic.Values
 {
 	public enum NumberType
 	{

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace ZMath.Algebraic
+using ZMath.Algebraic.Values;
+
+namespace ZMath.Algebraic.Functions
 {
 	public class MultiVariableFunction : Function
 	{

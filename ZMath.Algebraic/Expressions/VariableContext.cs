@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZMath.Algebraic.Values;
 
 namespace ZMath.Algebraic
 {
