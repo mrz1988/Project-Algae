@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Expressions\Constraints\SymbolConstraintTests.cs" />
+    <Compile Include="Expressions\Evaluation\ReduceTests.cs" />
     <Compile Include="Helpers\Numbers.cs" />
     <Compile Include="Helpers\Operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
