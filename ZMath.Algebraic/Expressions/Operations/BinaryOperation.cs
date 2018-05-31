@@ -1,5 +1,6 @@
 ﻿using System;
 using ZMath.Algebraic.Values;
+using ZMath.Algebraic.Constraints;
 
 namespace ZMath.Algebraic.Operations
 {
@@ -40,6 +41,21 @@ namespace ZMath.Algebraic.Operations
 		{
 			return _operand1.CanEvaluate() && _operand2.CanEvaluate();
 		}
+
+        public bool Matches(SymbolConstraint constraint)
+        {
+            if (!constraint.BaseNodeIsValid(this))
+                return false;
+
+            if (constraint.Left != null && !_operand1.Matches(constraint.Left))
+                return false;
+
+            if (constraint.Right != null && !_operand2.Matches(constraint.Right))
+                return false;
+
+            // If for some reason this was seeking a ternary+ operation let's not match
+            return constraint.ChildConstraints.Length <= 2;
+        }
 
 		public static ISymbol FromValues(SymbolType type, ISymbol operand1, ISymbol operand2)
 		{

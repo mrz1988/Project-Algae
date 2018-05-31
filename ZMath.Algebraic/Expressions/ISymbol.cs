@@ -1,4 +1,4 @@
-﻿//using ZMath.Algebraic.Constraints;
+﻿using ZMath.Algebraic.Constraints;
 using ZMath.Algebraic.Values;
 
 namespace ZMath.Algebraic
@@ -9,7 +9,7 @@ namespace ZMath.Algebraic
 		SymbolType Type { get; }
 		ISymbol Copy();
 		bool CanEvaluate();
-        //bool Matches(SymbolConstraint constraint);
+        bool Matches(SymbolConstraint constraint);
 		ISymbol MakeSubstitutions(VariableContext ctx);
 	}
 }

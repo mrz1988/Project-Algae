@@ -28,6 +28,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Expressions\Constraints\SymbolConstraint.cs" />
+    <Compile Include="Expressions\Constraints\SymbolConstraints.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Expressions\TreeBuilder.cs" />
     <Compile Include="Expressions\ISymbol.cs" />
@@ -59,7 +60,9 @@
     <Compile Include="Expressions\Functions\MultiVariableFunction.cs" />
     <Compile Include="Expressions\Exceptions.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Transforms\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZUtils\ZUtils.csproj">
       <Project>{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}</Project>

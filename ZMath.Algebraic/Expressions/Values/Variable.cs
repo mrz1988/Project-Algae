@@ -1,4 +1,6 @@
 ﻿using System;
+using ZMath.Algebraic.Constraints;
+
 namespace ZMath.Algebraic.Values
 {
 	public class Variable : ISymbol
@@ -24,9 +26,19 @@ namespace ZMath.Algebraic.Values
 		public bool CanEvaluate()
 		{
 			return false;
-		}
+        }
 
-		public ISymbol Copy()
+        public bool Matches(SymbolConstraint constraint)
+        {
+            if (!constraint.BaseNodeIsValid(this))
+                return false;
+
+            // No children, there better be no child constraints :D
+            return constraint.ChildConstraints.Length == 0;
+        }
+
+
+        public ISymbol Copy()
 		{
 			return new Variable(Name);
 		}

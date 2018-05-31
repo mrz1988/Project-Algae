@@ -1,5 +1,6 @@
 ﻿using System;
 using ZMath.Algebraic.Values;
+using ZMath.Algebraic.Constraints;
 
 namespace ZMath.Algebraic.Operations
 {
@@ -54,6 +55,18 @@ namespace ZMath.Algebraic.Operations
 		{
 			return _child.CanEvaluate();
 		}
+
+        public bool Matches(SymbolConstraint constraint)
+        {
+            if (!constraint.BaseNodeIsValid(this))
+                return false;
+
+            if (constraint.Left != null && !_child.Matches(constraint.Left))
+                return false;
+
+            // If for some reason this was seeking a binary+ operation let's not match
+            return constraint.ChildConstraints.Length <= 1;
+        }
 
 		public bool ChildEquals(ISymbol other)
 		{

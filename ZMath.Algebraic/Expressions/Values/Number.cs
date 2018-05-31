@@ -1,4 +1,6 @@
 ﻿using System;
+using ZMath.Algebraic.Constraints;
+
 namespace ZMath.Algebraic.Values
 {
 	public class Number : ISymbol, IComparable
@@ -81,6 +83,15 @@ namespace ZMath.Algebraic.Values
 		{
 			return true;
 		}
+
+        public bool Matches(SymbolConstraint constraint)
+        {
+            if (!constraint.BaseNodeIsValid(this))
+                return false;
+
+            // No children, there better be no child constraints :D
+            return constraint.ChildConstraints.Length == 0;
+        }
 
 		public int CompareTo(object obj)
 		{
