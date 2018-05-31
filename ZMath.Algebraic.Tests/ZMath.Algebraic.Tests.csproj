@@ -29,6 +29,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Expressions\Constraints\SymbolConstraintTests.cs" />
+    <Compile Include="Helpers\Numbers.cs" />
+    <Compile Include="Helpers\Operations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Expressions\SymbolTypeTests.cs" />
     <Compile Include="Expressions\Evaluation\NumberTests.cs" />
@@ -37,7 +40,7 @@
     <Compile Include="Expressions\Tokenizers\ComplexStringTokenizerTests.cs" />
     <Compile Include="Expressions\Tokenizers\SimpleStringTokenizerTests.cs" />
     <Compile Include="Expressions\Tokenizers\StringTokenizerValidationTests.cs" />
-    <Compile Include="Expressions\Tokenizers\Helpers\SymbolTokens.cs" />
+    <Compile Include="Helpers\SymbolTokens.cs" />
     <Compile Include="Expressions\Tokenizers\SymbolTokenTests.cs" />
     <Compile Include="Expressions\Tokenizers\TreeBuilderTests.cs" />
     <Compile Include="Expressions\Evaluation\FunctionTests.cs" />
@@ -56,8 +59,6 @@
       <Name>ZMath.Algebraic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Expressions\Constraints\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
