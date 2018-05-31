@@ -56,6 +56,14 @@ namespace ZMath.Algebraic.Operations
             return _child.CanEvaluate();
         }
 
+        public ISymbol Reduce()
+        {
+            if (CanEvaluate())
+                return GetValue();
+
+            return FromValues(Type, _child.Reduce());
+        }
+
         public bool Matches(SymbolConstraint constraint)
         {
             if (!constraint.BaseNodeIsValid(this))

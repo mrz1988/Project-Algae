@@ -82,6 +82,14 @@ namespace ZMath.Algebraic.Operations
             return FromValues(Type, o1, o2);
         }
 
+        public ISymbol Reduce()
+        {
+            if (CanEvaluate())
+                return GetValue();
+
+            return FromValues(Type, _operand1.Reduce(), _operand2.Reduce());
+        }
+
         public bool LeftEquals(ISymbol other)
         {
             return _operand1.Equals(other);

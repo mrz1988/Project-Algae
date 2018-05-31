@@ -8,6 +8,7 @@ namespace ZMath.Algebraic
         Number GetValue();
         SymbolType Type { get; }
         ISymbol Copy();
+        ISymbol Reduce();
         bool CanEvaluate();
         bool Matches(SymbolConstraint constraint);
         ISymbol MakeSubstitutions(VariableContext ctx);

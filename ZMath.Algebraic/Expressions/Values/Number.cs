@@ -84,6 +84,11 @@ namespace ZMath.Algebraic.Values
             return true;
         }
 
+        public ISymbol Reduce()
+        {
+            return this;
+        }
+
         public bool Matches(SymbolConstraint constraint)
         {
             if (!constraint.BaseNodeIsValid(this))

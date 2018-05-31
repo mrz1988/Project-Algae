@@ -37,6 +37,10 @@ namespace ZMath.Algebraic.Values
             return constraint.ChildConstraints.Length == 0;
         }
 
+        public ISymbol Reduce()
+        {
+            return this;
+        }
 
         public ISymbol Copy()
         {
