@@ -6,139 +6,139 @@ using ZUtils.Pipes;
 
 namespace ZMath.Algebraic
 {
-	public class StringToPrimitiveTokenPipe : AsymmetricPipe<char, SymbolToken>
-	{
-		private StringBuilder _chars;
-		private int _charsParsed = 0;
-		private int _recentWhitespace = 0;
+    public class StringToPrimitiveTokenPipe : AsymmetricPipe<char, SymbolToken>
+    {
+        private StringBuilder _chars;
+        private int _charsParsed = 0;
+        private int _recentWhitespace = 0;
 
-		private bool _buildingNum = false;
-		private bool _buildingWord = false;
-		private bool _previouslyConsumedSymbol = false;
+        private bool _buildingNum = false;
+        private bool _buildingWord = false;
+        private bool _previouslyConsumedSymbol = false;
 
-		private static readonly List<char> SymbolicChars = new List<char> {
-			'+',
-			'-',
-			'*',
-			'/',
-			'^',
-			'(',
-			')'
-		};
+        private static readonly List<char> SymbolicChars = new List<char> {
+            '+',
+            '-',
+            '*',
+            '/',
+            '^',
+            '(',
+            ')'
+        };
 
-		private VariableContext _ctx;
+        private VariableContext _ctx;
 
-		public StringToPrimitiveTokenPipe(string input, VariableContext ctx) : this(input.ToCharArray(), ctx) { }
-		public StringToPrimitiveTokenPipe(IEnumerable<char> input, VariableContext ctx) : base(input)
-		{
-			_chars = new StringBuilder();
-			_ctx = ctx;
-		}
+        public StringToPrimitiveTokenPipe(string input, VariableContext ctx) : this(input.ToCharArray(), ctx) { }
+        public StringToPrimitiveTokenPipe(IEnumerable<char> input, VariableContext ctx) : base(input)
+        {
+            _chars = new StringBuilder();
+            _ctx = ctx;
+        }
 
-		protected override void Consume(char val)
-		{
-			if (char.IsWhiteSpace(val))
-			{
-				_charsParsed++;
-				if (!_previouslyConsumedSymbol)
-					_recentWhitespace++;
-				return;
-			}
+        protected override void Consume(char val)
+        {
+            if (char.IsWhiteSpace(val))
+            {
+                _charsParsed++;
+                if (!_previouslyConsumedSymbol)
+                    _recentWhitespace++;
+                return;
+            }
 
-			if (char.IsDigit(val) || val == '.')
-				ParseNumChar(val);
-			else if (SymbolicChars.Contains(val))
-				ParseSymbol(val);
-			else
-				ParseWordChar(val);
-		}
+            if (char.IsDigit(val) || val == '.')
+                ParseNumChar(val);
+            else if (SymbolicChars.Contains(val))
+                ParseSymbol(val);
+            else
+                ParseWordChar(val);
+        }
 
-		protected override void Finish()
-		{
-			if (_buildingNum || _buildingWord)
-				CompleteToken();
+        protected override void Finish()
+        {
+            if (_buildingNum || _buildingWord)
+                CompleteToken();
 
-			_charsParsed = 0;
-			_recentWhitespace = 0;
-		}
+            _charsParsed = 0;
+            _recentWhitespace = 0;
+        }
 
-		private void ParseString(string s)
-		{
-			if (_ctx.IsRegistered(s))
-			{
-				Output(_ctx.GetToken(s));
-				return;
-			}
+        private void ParseString(string s)
+        {
+            if (_ctx.IsRegistered(s))
+            {
+                Output(_ctx.GetToken(s));
+                return;
+            }
 
-			SymbolToken token;
-			var parsed = SymbolToken.TryParse(s, out token);
-			var pos = _charsParsed - _recentWhitespace;
-			var len = s.Length;
-			_charsParsed += len;
-			_recentWhitespace = 0;
-			if (parsed)
-				Output(token.SetPosition(pos, len));
-			else
-			{
-				throw new UnrecognizedTokenException(pos, len, s);
-			}
-		}
+            SymbolToken token;
+            var parsed = SymbolToken.TryParse(s, out token);
+            var pos = _charsParsed - _recentWhitespace;
+            var len = s.Length;
+            _charsParsed += len;
+            _recentWhitespace = 0;
+            if (parsed)
+                Output(token.SetPosition(pos, len));
+            else
+            {
+                throw new UnrecognizedTokenException(pos, len, s);
+            }
+        }
 
-		private void ParseNumChar(char digit)
-		{
-			if (_buildingWord)
-				CompleteToken();
+        private void ParseNumChar(char digit)
+        {
+            if (_buildingWord)
+                CompleteToken();
 
-			_buildingNum = true;
-			_chars.Append(digit);
-			_previouslyConsumedSymbol = false;
-		}
+            _buildingNum = true;
+            _chars.Append(digit);
+            _previouslyConsumedSymbol = false;
+        }
 
-		private void ParseWordChar(char letter)
-		{
-			if (_buildingNum)
-				CompleteToken();
+        private void ParseWordChar(char letter)
+        {
+            if (_buildingNum)
+                CompleteToken();
 
-			_buildingWord = true;
-			_chars.Append(letter);
-			_previouslyConsumedSymbol = false;
-		}
+            _buildingWord = true;
+            _chars.Append(letter);
+            _previouslyConsumedSymbol = false;
+        }
 
-		private void ParseSymbol(char symbol)
-		{
-			if (_buildingNum || _buildingWord)
-				CompleteToken();
+        private void ParseSymbol(char symbol)
+        {
+            if (_buildingNum || _buildingWord)
+                CompleteToken();
 
-			// Assume all symbols are single-char
-			ParseString(symbol.ToString());
-			_previouslyConsumedSymbol = true;
-		}
+            // Assume all symbols are single-char
+            ParseString(symbol.ToString());
+            _previouslyConsumedSymbol = true;
+        }
 
-		private void CompleteToken()
-		{
-			var tokenString = _chars.ToString();
+        private void CompleteToken()
+        {
+            var tokenString = _chars.ToString();
 
-			if (_buildingNum)
-			{
-				var result = tokenString.Replace(".", "");
-				if (tokenString.Length - result.Length > 1)
-				{
-					var pos = _charsParsed - _recentWhitespace;
-					var len = tokenString.Length;
-					throw new InvalidTokenException(pos, len, "Multiple decimal points");
-				}
-			}
+            if (_buildingNum)
+            {
+                var result = tokenString.Replace(".", "");
+                if (tokenString.Length - result.Length > 1)
+                {
+                    var pos = _charsParsed - _recentWhitespace;
+                    var len = tokenString.Length;
+                    throw new InvalidTokenException(pos, len, "Multiple decimal points");
+                }
+            }
 
-			try
-			{
-				ParseString(tokenString);
-			}
-			finally
-			{
-				_chars = new StringBuilder();
-				_buildingNum = false;
-				_buildingWord = false;
-			}
-		}
-	}
+            try
+            {
+                ParseString(tokenString);
+            }
+            finally
+            {
+                _chars = new StringBuilder();
+                _buildingNum = false;
+                _buildingWord = false;
+            }
+        }
+    }
 }
