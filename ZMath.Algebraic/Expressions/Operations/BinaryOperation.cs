@@ -6,15 +6,15 @@ namespace ZMath.Algebraic.Operations
 {
     public abstract class BinaryOperation : ISymbol
     {
-        protected readonly ISymbol _operand1;
-        protected readonly ISymbol _operand2;
+        public readonly ISymbol Operand1;
+        public readonly ISymbol Operand2;
 
         public abstract SymbolType Type { get; }
 
         public BinaryOperation(ISymbol operand1, ISymbol operand2)
         {
-            _operand1 = operand1;
-            _operand2 = operand2;
+            Operand1 = operand1;
+            Operand2 = operand2;
         }
 
         protected abstract Number Evaluate(double left, double right);
@@ -23,8 +23,8 @@ namespace ZMath.Algebraic.Operations
 
         public Number GetValue()
         {
-            var left = _operand1.GetValue();
-            var right = _operand2.GetValue();
+            var left = Operand1.GetValue();
+            var right = Operand2.GetValue();
 
             if (left.IsFloatingPt || right.IsFloatingPt)
             {
@@ -39,7 +39,7 @@ namespace ZMath.Algebraic.Operations
 
         public bool CanEvaluate()
         {
-            return _operand1.CanEvaluate() && _operand2.CanEvaluate();
+            return Operand1.CanEvaluate() && Operand2.CanEvaluate();
         }
 
         public bool Matches(SymbolConstraint constraint)
@@ -47,10 +47,10 @@ namespace ZMath.Algebraic.Operations
             if (!constraint.BaseNodeIsValid(this))
                 return false;
 
-            if (constraint.Left != null && !_operand1.Matches(constraint.Left))
+            if (constraint.Left != null && !Operand1.Matches(constraint.Left))
                 return false;
 
-            if (constraint.Right != null && !_operand2.Matches(constraint.Right))
+            if (constraint.Right != null && !Operand2.Matches(constraint.Right))
                 return false;
 
             // If for some reason this was seeking a ternary+ operation let's not match
@@ -76,8 +76,8 @@ namespace ZMath.Algebraic.Operations
 
         public ISymbol MakeSubstitutions(VariableContext ctx)
         {
-            var o1 = _operand1.MakeSubstitutions(ctx);
-            var o2 = _operand2.MakeSubstitutions(ctx);
+            var o1 = Operand1.MakeSubstitutions(ctx);
+            var o2 = Operand2.MakeSubstitutions(ctx);
 
             return FromValues(Type, o1, o2);
         }
@@ -87,17 +87,17 @@ namespace ZMath.Algebraic.Operations
             if (CanEvaluate())
                 return GetValue();
 
-            return FromValues(Type, _operand1.Reduce(), _operand2.Reduce());
+            return FromValues(Type, Operand1.Reduce(), Operand2.Reduce());
         }
 
         public bool LeftEquals(ISymbol other)
         {
-            return _operand1.Equals(other);
+            return Operand1.Equals(other);
         }
 
         public bool RightEquals(ISymbol other)
         {
-            return _operand2.Equals(other);
+            return Operand2.Equals(other);
         }
 
         public override bool Equals(object obj)
@@ -110,15 +110,15 @@ namespace ZMath.Algebraic.Operations
             if (op.Type != Type)
                 return false;
 
-            return op.LeftEquals(_operand1) && op.RightEquals(_operand2);
+            return op.LeftEquals(Operand1) && op.RightEquals(Operand2);
         }
 
         public override int GetHashCode()
         {
             var hash = 27;
             hash = (hash * 17) + Type.GetHashCode();
-            hash = (hash * 17) + _operand1.GetHashCode();
-            hash = (hash * 17) + _operand2.GetHashCode();
+            hash = (hash * 17) + Operand1.GetHashCode();
+            hash = (hash * 17) + Operand2.GetHashCode();
 
             return hash;
         }

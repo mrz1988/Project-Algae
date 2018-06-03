@@ -11,7 +11,7 @@ namespace ZMath.Algebraic.Operations
 
         public override ISymbol Copy()
         {
-            return new Exponentiation(_operand1.Copy(), _operand2.Copy());
+            return new Exponentiation(Operand1.Copy(), Operand2.Copy());
         }
 
         protected override Number Evaluate(int left, int right)

@@ -71,6 +71,8 @@ namespace ZMath.Algebraic
 
         public void Define(string name, ISymbol definition)
         {
+            if (!IsRegistered(name))
+                throw new InvalidOperationException($"Variable '{name}' was not registered");
             _definedVars[name] = definition;
         }
 

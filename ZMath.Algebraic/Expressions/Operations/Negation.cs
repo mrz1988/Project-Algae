@@ -10,7 +10,7 @@ namespace ZMath.Algebraic.Operations
 
         public override ISymbol Copy()
         {
-            return new Negation(_child.Copy());
+            return new Negation(Child.Copy());
         }
 
         protected override Number Evaluate(int val)

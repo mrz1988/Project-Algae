@@ -6,12 +6,12 @@ namespace ZMath.Algebraic.Operations
 {
     public abstract class UnaryOperation : ISymbol
     {
-        protected readonly ISymbol _child;
+        public readonly ISymbol Child;
         public abstract SymbolType Type { get; }
 
         public UnaryOperation(ISymbol child)
         {
-            _child = child;
+            Child = child;
         }
 
         protected abstract Number Evaluate(int val);
@@ -37,13 +37,13 @@ namespace ZMath.Algebraic.Operations
 
         public ISymbol MakeSubstitutions(VariableContext ctx)
         {
-            var child = _child.MakeSubstitutions(ctx);
+            var child = Child.MakeSubstitutions(ctx);
             return FromValues(Type, child);
         }
 
         public Number GetValue()
         {
-            var val = _child.GetValue();
+            var val = Child.GetValue();
 
             if (val.IsFloatingPt)
                 return Evaluate(val.AsFloatingPt);
@@ -53,7 +53,7 @@ namespace ZMath.Algebraic.Operations
 
         public bool CanEvaluate()
         {
-            return _child.CanEvaluate();
+            return Child.CanEvaluate();
         }
 
         public ISymbol Reduce()
@@ -61,7 +61,7 @@ namespace ZMath.Algebraic.Operations
             if (CanEvaluate())
                 return GetValue();
 
-            return FromValues(Type, _child.Reduce());
+            return FromValues(Type, Child.Reduce());
         }
 
         public bool Matches(SymbolConstraint constraint)
@@ -69,7 +69,7 @@ namespace ZMath.Algebraic.Operations
             if (!constraint.BaseNodeIsValid(this))
                 return false;
 
-            if (constraint.Left != null && !_child.Matches(constraint.Left))
+            if (constraint.Left != null && !Child.Matches(constraint.Left))
                 return false;
 
             // If for some reason this was seeking a binary+ operation let's not match
@@ -78,7 +78,7 @@ namespace ZMath.Algebraic.Operations
 
         public bool ChildEquals(ISymbol other)
         {
-            return _child.Equals(other);
+            return Child.Equals(other);
         }
 
         public override bool Equals(object obj)
@@ -91,14 +91,14 @@ namespace ZMath.Algebraic.Operations
             if (op.Type != Type)
                 return false;
 
-            return op.ChildEquals(_child);
+            return op.ChildEquals(Child);
         }
 
         public override int GetHashCode()
         {
             var hash = 27;
             hash = (hash * 17) + Type.GetHashCode();
-            hash = (hash * 17) + _child.GetHashCode();
+            hash = (hash * 17) + Child.GetHashCode();
 
             return hash;
         }

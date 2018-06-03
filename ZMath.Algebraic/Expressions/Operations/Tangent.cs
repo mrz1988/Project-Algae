@@ -11,7 +11,7 @@ namespace ZMath.Algebraic.Operations
 
         public override ISymbol Copy()
         {
-            return new Tangent(_child.Copy());
+            return new Tangent(Child.Copy());
         }
 
         protected override Number Evaluate(int val)

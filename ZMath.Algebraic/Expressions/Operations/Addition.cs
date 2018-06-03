@@ -10,7 +10,7 @@ namespace ZMath.Algebraic.Operations
 
         public override ISymbol Copy()
         {
-            return new Addition(_operand1.Copy(), _operand2.Copy());
+            return new Addition(Operand1.Copy(), Operand2.Copy());
         }
 
         protected override Number Evaluate(int left, int right)

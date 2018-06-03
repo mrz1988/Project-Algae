@@ -11,7 +11,7 @@ namespace ZMath.Algebraic.Operations
 
         public override ISymbol Copy()
         {
-            return new Cosine(_child.Copy());
+            return new Cosine(Child.Copy());
         }
 
         protected override Number Evaluate(int val)

@@ -59,10 +59,13 @@
     <Compile Include="Expressions\Functions\SingleVariableFunction.cs" />
     <Compile Include="Expressions\Functions\MultiVariableFunction.cs" />
     <Compile Include="Expressions\Exceptions.cs" />
+    <Compile Include="Transforms\SymbolicDeconstruction.cs" />
+    <Compile Include="Transforms\SymbolicReconstruction.cs" />
+    <Compile Include="Transforms\SymbolicTransform.cs" />
+    <Compile Include="Transforms\SymbolMap.cs" />
+    <Compile Include="Transforms\SymbolName.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Transforms\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ZUtils\ZUtils.csproj">
       <Project>{AD51D6E0-93A2-4B2A-AD2B-DFA6F4E3E07C}</Project>
