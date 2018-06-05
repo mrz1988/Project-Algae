@@ -28,8 +28,7 @@ namespace ZMath.Algebraic
         public static List<SymbolToken> TrimParentheses(List<SymbolToken> tokens)
         {
             var len = tokens.Count;
-            while (tokens[0].Type == SymbolType.OpenBracket &&
-                tokens[len - 1].Type == SymbolType.CloseBracket)
+            while (tokens.HasRedundantParentheses())
             {
                 tokens = tokens.GetRange(1, len - 2);
             }

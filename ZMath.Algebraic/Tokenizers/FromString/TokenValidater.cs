@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ZUtils.Pipes;
 
 namespace ZMath.Algebraic

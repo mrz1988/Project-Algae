@@ -52,6 +52,7 @@
     <Compile Include="Tokenizers\FromString\RedundantParenthesesProcessor.cs" />
     <Compile Include="Tokenizers\FromString\StringToPrimitiveTokenPipe.cs" />
     <Compile Include="Tokenizers\FromString\TokenValidater.cs" />
+    <Compile Include="Tokenizers\FromString\Utilities.cs" />
     <Compile Include="Tokenizers\SymbolToken.cs" />
     <Compile Include="Tokenizers\FromString\StringTokenizer.cs" />
     <Compile Include="Expressions\VariableContext.cs" />

@@ -191,6 +191,40 @@ namespace ZMath.Algebraic.Transforms
                 }
             );
 
+        private static BasicSymbolicConstraint ComplexMultiplicationHasIsolatableConstants =
+            new BasicSymbolicConstraint(
+                s => s.Type == SymbolType.Multiplication,
+                new BasicSymbolicConstraint[]
+                {
+                    BasicSymbolicConstraint.IsOperation(SymbolType.Number),
+                    new BasicSymbolicConstraint(
+                        s => s.Type == SymbolType.Multiplication,
+                        new BasicSymbolicConstraint[]
+                        {
+                            new BasicSymbolicConstraint(s => s.Type == SymbolType.Number),
+                            new BasicSymbolicConstraint(s => !s.CanEvaluate())
+                        }
+                    )
+                }
+            );
+
+        private static BasicSymbolicConstraint ComplexAdditionHasIsolatableConstants =
+            new BasicSymbolicConstraint(
+                s => s.Type == SymbolType.Addition,
+                new BasicSymbolicConstraint[]
+                {
+                    BasicSymbolicConstraint.IsOperation(SymbolType.Number),
+                    new BasicSymbolicConstraint(
+                        s => s.Type == SymbolType.Addition,
+                        new BasicSymbolicConstraint[]
+                        {
+                            new BasicSymbolicConstraint(s => s.Type == SymbolType.Number),
+                            new BasicSymbolicConstraint(s => !s.CanEvaluate())
+                        }
+                    )
+                }
+            );
+
         private static SymbolMap MapLeftChild = new SymbolMap(new SymbolMap[]
         {
             new SymbolMap(SymbolNames.Left),
@@ -201,6 +235,16 @@ namespace ZMath.Algebraic.Transforms
         {
             new SymbolMap(),
             new SymbolMap(SymbolNames.Right)
+        });
+
+        private static SymbolMap MapOneLeafLeftTwoLeavesRight = new SymbolMap(new SymbolMap[]
+        {
+            new SymbolMap(SymbolNames.One),
+            new SymbolMap(new SymbolMap[]
+            {
+                new SymbolMap(SymbolNames.Two),
+                new SymbolMap(SymbolNames.Three)
+            })
         });
 
         private static Function KeepLeftChildOnly = new Function(
@@ -253,6 +297,28 @@ namespace ZMath.Algebraic.Transforms
             MapRightChild.GenerateContext()
         );
 
+        private static Function MultiplicationWithOneTwoLeftThreeRight = new Function(
+            new Multiplication(
+                new Multiplication(
+                    new Variable(SymbolNames.One.Name),
+                    new Variable(SymbolNames.Two.Name)
+                ),
+                new Variable(SymbolNames.Three.Name)
+            ),
+            MapOneLeafLeftTwoLeavesRight.GenerateContext()
+        );
+
+        private static Function AdditionWithOneTwoLeftThreeRight = new Function(
+            new Addition(
+                new Addition(
+                    new Variable(SymbolNames.One.Name),
+                    new Variable(SymbolNames.Two.Name)
+                ),
+                new Variable(SymbolNames.Three.Name)
+            ),
+            MapOneLeafLeftTwoLeavesRight.GenerateContext()
+        );
+
         public static SymbolicTransform OneTimesAnythingIsItself = New(
             OneTimesAnything,
             MapRightChild,
@@ -295,6 +361,18 @@ namespace ZMath.Algebraic.Transforms
             RightChildSquared
         );
 
+        public static SymbolicTransform MultipliedConstantsPropagateUpwards = New(
+            ComplexMultiplicationHasIsolatableConstants,
+            MapOneLeafLeftTwoLeavesRight,
+            MultiplicationWithOneTwoLeftThreeRight
+        );
+
+        public static SymbolicTransform AddedConstantsPropagateUpwards = New(
+            ComplexAdditionHasIsolatableConstants,
+            MapOneLeafLeftTwoLeavesRight,
+            AdditionWithOneTwoLeftThreeRight
+        );
+
         public static TransformSet AlgebraicReduce = new TransformSet(
             new List<SymbolicTransform>()
             {
@@ -305,6 +383,8 @@ namespace ZMath.Algebraic.Transforms
                 AnythingDividedByItselfIsOne,
                 AnythingPlusItselfIsItselfTimesTwo,
                 AnythingTimesItselfIsItselfSquared,
+                MultipliedConstantsPropagateUpwards,
+                AddedConstantsPropagateUpwards,
             });
         #endregion
     }

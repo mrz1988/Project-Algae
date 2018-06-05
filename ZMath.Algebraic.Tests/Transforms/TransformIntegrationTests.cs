@@ -12,9 +12,9 @@ namespace ZMath.Algebraic.Tests.Transforms
         {
             var transform = SymbolicTransform.MoveComplexSubtreesRight
                 .CombineWith(SymbolicTransform.AlgebraicReduce);
-            var expression = StringTokenizer.ToExpression("3*x + 3*x + ((3*x * 1)/(3*x * 1))", VariableContext.FromVariableNames("x"));
-            var expected = "6*x + 1";
-            var result = transform.Transform(expression).ToString();
+            var expression = StringTokenizer.ToExpression("3*x + 3*x + ((3*x * 1)/(3*x * 1))", VariableContext.Default);
+            var expected = transform.Transform(StringTokenizer.ToExpression("6*x + 1", VariableContext.Default));
+            var result = transform.Transform(expression);
 
             Assert.AreEqual(expected, result);
         }

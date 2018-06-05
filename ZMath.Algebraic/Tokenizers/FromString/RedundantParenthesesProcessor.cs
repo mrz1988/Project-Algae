@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ZUtils.Pipes;
 
 namespace ZMath.Algebraic
@@ -34,8 +33,7 @@ namespace ZMath.Algebraic
             if (_parentheses == 0)
             {
                 // Remove all surrounding parentheses
-                while (_heldInput[0].Type == SymbolType.OpenBracket &&
-                    _heldInput[_heldInput.Count - 1].Type == SymbolType.CloseBracket)
+                while (_heldInput.HasRedundantParentheses())
                 {
                     if (_heldInput.Count == 2)
                     {

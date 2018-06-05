@@ -111,6 +111,11 @@ namespace ZMath.Algebraic
             return hash;
         }
 
+        public override string ToString()
+        {
+            return Token;
+        }
+
         public static bool operator ==(SymbolToken a, SymbolToken b)
         {
             if (a == null)
