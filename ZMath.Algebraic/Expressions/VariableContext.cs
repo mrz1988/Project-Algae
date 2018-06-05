@@ -76,6 +76,23 @@ namespace ZMath.Algebraic
             _definedVars[name] = definition;
         }
 
+        /// <summary>
+        /// Adds definitions from intersecting variable names, substituting their
+        /// values into the context. Similar to running "Define" on the present
+        /// context from each defined variable in the other context.
+        /// </summary>
+        /// <param name="other"></param>
+        public void DefineFrom(VariableContext other)
+        {
+            foreach (var variableName in _initMap.Keys)
+            {
+                if (other.IsDefined(variableName))
+                {
+                    Define(variableName, other.Get(variableName));
+                }
+            }
+        }
+
         public void UndefineAll()
         {
             _definedVars = new Dictionary<string, ISymbol>();
@@ -94,6 +111,23 @@ namespace ZMath.Algebraic
         public bool IsDefined(string name)
         {
             return _definedVars.ContainsKey(name);
+        }
+
+        /// <summary>
+        /// Identifies whether all variables in this context are
+        /// registered in the other context
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool IsSubsetOf(VariableContext other)
+        {
+            foreach (var variableName in _initMap.Keys)
+            {
+                if (!other.IsRegistered(variableName))
+                    return false;
+            }
+
+            return true;
         }
 
         public ISymbol InitVar(string name)

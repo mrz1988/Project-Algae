@@ -16,7 +16,7 @@ namespace ZMath.Algebraic.Tests
                 new Number(3)
             );
 
-            var result = StringTokenizer.BuildTreeFrom("3 + 3");
+            var result = StringTokenizer.ToExpression("3 + 3");
 
             Assert.AreEqual(expected, result);
         }
@@ -26,7 +26,7 @@ namespace ZMath.Algebraic.Tests
         {
             var expected = new Negation(new Number(3));
 
-            var result = StringTokenizer.BuildTreeFrom("-3");
+            var result = StringTokenizer.ToExpression("-3");
 
             Assert.AreEqual(expected, result);
         }
@@ -41,7 +41,7 @@ namespace ZMath.Algebraic.Tests
                 )
             );
 
-            var result = StringTokenizer.BuildTreeFrom("3 - 3");
+            var result = StringTokenizer.ToExpression("3 - 3");
             Assert.AreEqual(expected, result);
         }
 
@@ -57,7 +57,7 @@ namespace ZMath.Algebraic.Tests
                 )
             );
 
-            var result = StringTokenizer.BuildTreeFrom("3 -- 3");
+            var result = StringTokenizer.ToExpression("3 -- 3");
             Assert.AreEqual(expected, result);
         }
 
@@ -80,7 +80,7 @@ namespace ZMath.Algebraic.Tests
                     )
                 )
             );
-            var result = StringTokenizer.BuildTreeFrom("3 + 2 * 5 + 1 * (10 + 3)");
+            var result = StringTokenizer.ToExpression("3 + 2 * 5 + 1 * (10 + 3)");
 
             Assert.AreEqual(expected, result);
         }
@@ -88,9 +88,9 @@ namespace ZMath.Algebraic.Tests
         [Test]
         public static void CanSolveSimpleOrderOfOperations()
         {
-            var tree1 = StringTokenizer.BuildTreeFrom("6+7*8");
-            var tree2 = StringTokenizer.BuildTreeFrom("16 / 8 - 2");
-            var tree3 = StringTokenizer.BuildTreeFrom("(25-11) * 3");
+            var tree1 = StringTokenizer.ToExpression("6+7*8");
+            var tree2 = StringTokenizer.ToExpression("16 / 8 - 2");
+            var tree3 = StringTokenizer.ToExpression("(25-11) * 3");
 
             var result1 = tree1.GetValue().AsInt;
             var result2 = tree2.GetValue().AsInt;
@@ -104,9 +104,9 @@ namespace ZMath.Algebraic.Tests
         [Test]
         public static void CanSolveMediumOrderOfOperations()
         {
-            var tree1 = StringTokenizer.BuildTreeFrom("3 + 6 * (5 + 4) / 3 - 7");
-            var tree2 = StringTokenizer.BuildTreeFrom("9 - 5 / (8 - 3) * 2 + 6");
-            var tree3 = StringTokenizer.BuildTreeFrom("150 / (6 + 3 * 8) - 5");
+            var tree1 = StringTokenizer.ToExpression("3 + 6 * (5 + 4) / 3 - 7");
+            var tree2 = StringTokenizer.ToExpression("9 - 5 / (8 - 3) * 2 + 6");
+            var tree3 = StringTokenizer.ToExpression("150 / (6 + 3 * 8) - 5");
 
             var result1 = tree1.GetValue().AsInt;
             var result2 = tree2.GetValue().AsInt;
@@ -131,16 +131,23 @@ namespace ZMath.Algebraic.Tests
             var ctx = new VariableContext(new Dictionary<string, ISymbol> {
                 { "x", new Variable("x") }
             });
-            var result = StringTokenizer.BuildTreeFrom("x + 2*x", ctx);
+            var result = StringTokenizer.ToExpression("x + 2*x", ctx);
 
             Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public static void CanBuildExpressionWithComplexParentheses()
+        {
+            var ctx = new VariableContext(new Dictionary<string, ISymbol> { { "x", new Variable("x") } });
+            var result = StringTokenizer.ToExpression("3*x + 3*x + ((3*x * 1)/(3*x * 1))", ctx);
         }
 
         [Test]
         public static void FailsToBuildTreeWithUnrecognizedVariable()
         {
             Assert.Throws<UnrecognizedTokenException>(() => {
-                StringTokenizer.BuildTreeFrom("x + 2");
+                StringTokenizer.ToExpression("x + 2");
             });
         }
 
@@ -149,7 +156,7 @@ namespace ZMath.Algebraic.Tests
         {
             var expected = new Number(1);
 
-            var tree = StringTokenizer.BuildTreeFrom("cos(2*pi)");
+            var tree = StringTokenizer.ToExpression("cos(2*pi)");
 
             Assert.True(tree.CanEvaluate());
             Assert.AreEqual(expected, tree.GetValue());

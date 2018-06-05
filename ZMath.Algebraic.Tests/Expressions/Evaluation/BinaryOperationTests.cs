@@ -125,6 +125,8 @@ namespace ZMath.Algebraic.Tests
 
 			Assert.True(op1.Equals(op2));
 			Assert.True(op1.Equals(op1));
+            // repeat for memoization test
+            Assert.True(op1.Equals(op2));
 			Assert.True(op2.Equals(op1));
 		}
 

@@ -17,7 +17,7 @@ namespace ZMath.Algebraic.Functions
         public static MultiVariableFunction FromString(string expression, params string[] variableNames)
         {
             var ctx = VariableContext.FromVariableNames(variableNames);
-            var root = StringTokenizer.BuildTreeFrom(expression, ctx);
+            var root = StringTokenizer.ToExpression(expression, ctx);
             return new MultiVariableFunction(root, variableNames);
         }
 

@@ -16,7 +16,7 @@ namespace ZMath.Algebraic.Functions
         public static SingleVariableFunction FromString(string expression, string variableName)
         {
             var ctx = VariableContext.FromVariableNames(new List<string> { variableName } );
-            var root = StringTokenizer.BuildTreeFrom(expression, ctx);
+            var root = StringTokenizer.ToExpression(expression, ctx);
             return new SingleVariableFunction(root, variableName);
         }
 

@@ -4,7 +4,7 @@ using ZMath.Algebraic.Values;
 namespace ZMath.Algebraic.Tests
 {
     [TestFixture]
-    public static class NumberTests
+    public static class ValueTests
     {
         [Test]
         public static void CanStoreFetchInt()
@@ -47,6 +47,8 @@ namespace ZMath.Algebraic.Tests
             var n3a = new Number(-3);
             var n3b = new Number(-3);
 
+            Assert.True(n1.Equals(n1));
+            // Repeat test for memoization
             Assert.True(n1.Equals(n1));
             Assert.True(n2.Equals(n2));
             Assert.True(n3a.Equals(n3b));
@@ -234,6 +236,24 @@ namespace ZMath.Algebraic.Tests
             Assert.False(n < null);
             Assert.False(null > n);
             Assert.True(null < n);
+        }
+
+        [Test]
+        public static void CanEquateEqualVariables()
+        {
+            var v1 = new Variable("hello");
+            var v2 = new Variable("hello");
+            var v3 = new Variable("world");
+
+#pragma warning disable CS1718 // Comparison made to same variable
+            Assert.True(v1 == v1);
+#pragma warning restore CS1718 // Comparison made to same variable
+            Assert.True(v1 == v2);
+            Assert.True(v2 == v1);
+            // repeat for memoization
+            Assert.True(v2 == v1);
+
+            Assert.False(v1 == v3);
         }
     }
 }

@@ -5,6 +5,8 @@ namespace ZMath.Algebraic.Values
 {
     public class Variable : ISymbol
     {
+        private int? _hash = null;
+
         public SymbolType Type { get { return SymbolType.Variable; } }
         public string Name { get; private set; }
 
@@ -28,7 +30,7 @@ namespace ZMath.Algebraic.Values
             return false;
         }
 
-        public bool Matches(SymbolConstraint constraint)
+        public bool Matches(BasicSymbolicConstraint constraint)
         {
             if (!constraint.BaseNodeIsValid(this))
                 return false;
@@ -52,25 +54,35 @@ namespace ZMath.Algebraic.Values
             return Name;
         }
 
+        public bool Equals(ISymbol other)
+        {
+            if (other == null || GetType() != other.GetType())
+                return false;
+
+            return GetHashCode() == other.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            Variable v = (Variable)obj;
-
-            return v.Type == Type && v.Name == Name;
+            return GetHashCode() == obj.GetHashCode();
         }
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            if (_hash != null)
+                return _hash.Value;
+
+            _hash = Name.GetHashCode();
+            return _hash.Value;
         }
 
         public static bool operator ==(Variable a, Variable b)
         {
-            if (a == null)
-                return b == null;
+            if (ReferenceEquals(a, null))
+                return ReferenceEquals(b, null);
 
             return a.Equals(b);
         }

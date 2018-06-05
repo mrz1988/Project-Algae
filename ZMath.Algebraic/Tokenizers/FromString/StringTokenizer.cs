@@ -20,12 +20,12 @@ namespace ZMath.Algebraic
             return pipe5.PumpAll();
         }
 
-        public static ISymbol BuildTreeFrom(string expression)
+        public static ISymbol ToExpression(string expression)
         {
-            return BuildTreeFrom(expression, VariableContext.ConstantsOnly);
+            return ToExpression(expression, VariableContext.ConstantsOnly);
         }
 
-        public static ISymbol BuildTreeFrom(string expression, VariableContext context)
+        public static ISymbol ToExpression(string expression, VariableContext context)
         {
             var tokens = Parse(expression, context);
             var tb = new TreeBuilder(tokens, context);

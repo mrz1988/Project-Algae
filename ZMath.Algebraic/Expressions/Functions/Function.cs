@@ -18,9 +18,29 @@ namespace ZMath.Algebraic.Functions
             _ctx.Define(variableName, substitution);
         }
 
+        public void SubstituteFrom(VariableContext context)
+        {
+            _ctx.DefineFrom(context);
+        }
+
+        public void ClearSubstitutions()
+        {
+            _ctx.UndefineAll();
+        }
+
         public Number Evaluate()
         {
             return _root.MakeSubstitutions(_ctx).GetValue();
+        }
+
+        public ISymbol ToExpression()
+        {
+            return _root.MakeSubstitutions(_ctx);
+        }
+
+        public bool ContainsVariables(VariableContext variables)
+        {
+            return variables.IsSubsetOf(_ctx);
         }
     }
 }

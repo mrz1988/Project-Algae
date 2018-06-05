@@ -10,7 +10,7 @@ namespace ZMath.Algebraic.Tests
         public static void CanSubstituteAndEvaluateFunction()
         {
             var ctx = VariableContext.FromVariableNames("x");
-            var tree = StringTokenizer.BuildTreeFrom(" 2 * x", ctx);
+            var tree = StringTokenizer.ToExpression(" 2 * x", ctx);
             var function = new SingleVariableFunction(tree, "x");
 
             Assert.AreEqual(4, function.Call(2).AsInt);

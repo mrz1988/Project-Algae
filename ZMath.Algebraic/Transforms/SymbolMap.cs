@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using ZUtils.Collections;
 
 namespace ZMath.Algebraic.Transforms
 {
+    // TODO: Enforce symbol name uniqueness
     public class SymbolMap : ImmutableTree<SymbolName>
     {
         // enforce leaf-only setup
+        public SymbolMap() : this(SymbolName.None) { }
         public SymbolMap(SymbolName name) : base(name, new SymbolMap[] { }) { }
         public SymbolMap(SymbolMap[] children) : base(SymbolName.None, children) { }
 

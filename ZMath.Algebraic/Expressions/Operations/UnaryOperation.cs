@@ -6,6 +6,8 @@ namespace ZMath.Algebraic.Operations
 {
     public abstract class UnaryOperation : ISymbol
     {
+        private int? _hash = null;
+
         public readonly ISymbol Child;
         public abstract SymbolType Type { get; }
 
@@ -33,6 +35,11 @@ namespace ZMath.Algebraic.Operations
                 default:
                     throw new ArgumentException("Not a valid unary operation", nameof(type));
             }
+        }
+
+        public ISymbol ReplaceChild(ISymbol newChild)
+        {
+            return FromValues(Type, newChild);
         }
 
         public ISymbol MakeSubstitutions(VariableContext ctx)
@@ -64,7 +71,7 @@ namespace ZMath.Algebraic.Operations
             return FromValues(Type, Child.Reduce());
         }
 
-        public bool Matches(SymbolConstraint constraint)
+        public bool Matches(BasicSymbolicConstraint constraint)
         {
             if (!constraint.BaseNodeIsValid(this))
                 return false;
@@ -81,24 +88,31 @@ namespace ZMath.Algebraic.Operations
             return Child.Equals(other);
         }
 
+        public bool Equals(ISymbol other)
+        {
+            if (ReferenceEquals(other, null) || GetType() != other.GetType())
+                return false;
+
+            return GetHashCode() == other.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
                 return false;
 
-            UnaryOperation op = (UnaryOperation)obj;
-
-            if (op.Type != Type)
-                return false;
-
-            return op.ChildEquals(Child);
+            return GetHashCode() == obj.GetHashCode();
         }
 
         public override int GetHashCode()
         {
+            if (_hash != null)
+                return _hash.Value;
+
             var hash = 27;
             hash = (hash * 17) + Type.GetHashCode();
             hash = (hash * 17) + Child.GetHashCode();
+            _hash = hash;
 
             return hash;
         }

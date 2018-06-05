@@ -6,6 +6,8 @@ namespace ZMath.Algebraic.Operations
 {
     public abstract class BinaryOperation : ISymbol
     {
+        private int? _hash = null;
+
         public readonly ISymbol Operand1;
         public readonly ISymbol Operand2;
 
@@ -42,7 +44,7 @@ namespace ZMath.Algebraic.Operations
             return Operand1.CanEvaluate() && Operand2.CanEvaluate();
         }
 
-        public bool Matches(SymbolConstraint constraint)
+        public bool Matches(BasicSymbolicConstraint constraint)
         {
             if (!constraint.BaseNodeIsValid(this))
                 return false;
@@ -72,6 +74,16 @@ namespace ZMath.Algebraic.Operations
                 default:
                     throw new ArgumentException("Not a valid binary symbol type", nameof(type));
             }
+        }
+
+        public ISymbol ReplaceOperand1(ISymbol newOperand)
+        {
+            return FromValues(Type, newOperand, Operand2);
+        }
+
+        public ISymbol ReplaceOperand2(ISymbol newOperand)
+        {
+            return FromValues(Type, Operand1, newOperand);
         }
 
         public ISymbol MakeSubstitutions(VariableContext ctx)
@@ -105,22 +117,29 @@ namespace ZMath.Algebraic.Operations
             if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
                 return false;
 
-            BinaryOperation op = (BinaryOperation)obj;
-
-            if (op.Type != Type)
-                return false;
-
-            return op.LeftEquals(Operand1) && op.RightEquals(Operand2);
+            return GetHashCode() == obj.GetHashCode();
         }
 
         public override int GetHashCode()
         {
+            if (_hash != null)
+                return _hash.Value;
+
             var hash = 27;
             hash = (hash * 17) + Type.GetHashCode();
             hash = (hash * 17) + Operand1.GetHashCode();
             hash = (hash * 17) + Operand2.GetHashCode();
 
+            _hash = hash;
             return hash;
+        }
+
+        public bool Equals(ISymbol other)
+        {
+            if (ReferenceEquals(other, null) || GetType() != other.GetType())
+                return false;
+
+            return GetHashCode() == other.GetHashCode();
         }
 
         public static bool operator ==(BinaryOperation a, ISymbol b)

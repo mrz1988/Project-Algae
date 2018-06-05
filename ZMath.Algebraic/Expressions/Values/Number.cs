@@ -5,6 +5,8 @@ namespace ZMath.Algebraic.Values
 {
     public class Number : ISymbol, IComparable
     {
+        private int? _hash = null;
+
         private int _intVal;
         private double _floatVal;
         private NumberType _type;
@@ -89,7 +91,7 @@ namespace ZMath.Algebraic.Values
             return this;
         }
 
-        public bool Matches(SymbolConstraint constraint)
+        public bool Matches(BasicSymbolicConstraint constraint)
         {
             if (!constraint.BaseNodeIsValid(this))
                 return false;
@@ -110,13 +112,24 @@ namespace ZMath.Algebraic.Values
             return AsFloatingPt.CompareTo(n.AsFloatingPt);
         }
 
+        public bool Equals(ISymbol other)
+        {
+            if (ReferenceEquals(other, null) || GetType() != other.GetType())
+                return false;
+
+            return NumEquals((Number)other);
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            Number n = (Number)obj;
+            return NumEquals((Number)obj);
+        }
 
+        private bool NumEquals(Number n)
+        {
             if (IsFloatingPt || n.IsFloatingPt)
             {
                 // Tolerance for floating point equality is defined as
@@ -131,7 +144,11 @@ namespace ZMath.Algebraic.Values
 
         public override int GetHashCode()
         {
-            return AsFloatingPt.GetHashCode();
+            if (_hash != null)
+                return _hash.Value;
+
+            _hash = AsFloatingPt.GetHashCode();
+            return _hash.Value;
         }
 
         public static bool operator ==(Number a, Number b)

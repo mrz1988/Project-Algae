@@ -1,7 +1,8 @@
 ﻿using System;
 
-namespace ZMath.Algebraic.Transforms
+namespace ZMath.Algebraic
 {
+    //TODO: add this to variable contexts
     public class SymbolName
     {
         public static SymbolName None = new SymbolName();

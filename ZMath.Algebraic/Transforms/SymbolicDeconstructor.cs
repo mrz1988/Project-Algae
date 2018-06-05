@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using ZMath.Algebraic.Operations;
 
 namespace ZMath.Algebraic.Transforms
 {
-    public class SymbolicDeconstruction
+    public class SymbolicDeconstructor
     {
         private readonly SymbolMap _map;
 
-        public SymbolicDeconstruction(SymbolMap map)
+        public SymbolicDeconstructor(SymbolMap map)
         {
             _map = map;
-
         }
 
         public VariableContext Deconstruct(ISymbol expression)
         {
-            return Deconstruct(expression, _map, new VariableContext());
+            return Deconstruct(expression, _map, _map.GenerateContext());
         }
 
         private static VariableContext Deconstruct(
