@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ZMath.Algebraic.Values;
 using ZMath.Algebraic.Constraints;
 
@@ -140,6 +141,47 @@ namespace ZMath.Algebraic.Operations
                 return false;
 
             return GetHashCode() == other.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            var symbol = SymbolToken.OperatorStringOf(Type);
+            var left = Operand1.ToString();
+            if (Operand1.Type.Order() < Type.Order())
+                left = $"({left})";
+
+            var right = Operand2.ToString();
+            if (Operand2.Type.Order() < Type.Order())
+                right = $"({right})";
+
+            return $"{left} {symbol} {right}";
+        }
+
+        public string ToString(VariableContext ctx)
+        {
+            return ToString();
+        }
+
+        public virtual List<SymbolToken> Tokenize()
+        {
+            var opToken = new SymbolToken(Type, SymbolToken.OperatorStringOf(Type));
+            var tokens = new List<SymbolToken>();
+
+            if (Operand1.Type.Order() < Type.Order())
+                tokens.Add(SymbolToken.OpenBracket);
+            tokens.AddRange(Operand1.Tokenize());
+            if (Operand1.Type.Order() < Type.Order())
+                tokens.Add(SymbolToken.CloseBracket);
+
+            tokens.Add(opToken);
+
+            if (Operand2.Type.Order() < Type.Order())
+                tokens.Add(SymbolToken.OpenBracket);
+            tokens.AddRange(Operand2.Tokenize());
+            if (Operand2.Type.Order() < Type.Order())
+                tokens.Add(SymbolToken.CloseBracket);
+
+            return tokens;
         }
 
         public static bool operator ==(BinaryOperation a, ISymbol b)

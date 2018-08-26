@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ZMath.Algebraic.Constraints;
 
 namespace ZMath.Algebraic.Values
@@ -52,6 +53,23 @@ namespace ZMath.Algebraic.Values
         public override string ToString()
         {
             return Name;
+        }
+
+        public string ToString(VariableContext ctx)
+        {
+            if (ctx.IsDefined(Name))
+            {
+                var value = ctx.Get(Name).ToString();
+                return $"[{value}]";
+            }
+
+            return Name;
+        }
+
+        public List<SymbolToken> Tokenize()
+        {
+            var token = new SymbolToken(SymbolType.Variable, ToString());
+            return new List<SymbolToken>() { token };
         }
 
         public bool Equals(ISymbol other)

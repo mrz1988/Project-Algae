@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ZMath.Algebraic.Constraints;
 using ZMath.Algebraic.Values;
 
@@ -13,5 +14,8 @@ namespace ZMath.Algebraic
         bool CanEvaluate();
         bool Matches(BasicSymbolicConstraint constraint);
         ISymbol MakeSubstitutions(VariableContext ctx);
+        string ToString();
+        string ToString(VariableContext ctx);
+        List<SymbolToken> Tokenize();
     }
 }

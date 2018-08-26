@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using ZMath.Algebraic.Values;
 
@@ -39,6 +40,11 @@ namespace ZMath.Algebraic
         {
             _initMap = mapping;
             _definedVars = new Dictionary<string, ISymbol>();
+        }
+
+        public VariableContext Copy()
+        {
+            return FromVariableNames(_initMap.Keys.ToArray());
         }
 
         public static VariableContext FromVariableNames(string varName)

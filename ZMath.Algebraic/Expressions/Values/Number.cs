@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ZMath.Algebraic.Constraints;
 
 namespace ZMath.Algebraic.Values
@@ -188,6 +189,17 @@ namespace ZMath.Algebraic.Values
             if (IsFloatingPt)
                 return AsFloatingPt.ToString();
             return AsInt.ToString();
+        }
+
+        public string ToString(VariableContext context)
+        {
+            return ToString();
+        }
+
+        public List<SymbolToken> Tokenize()
+        {
+            var token = new SymbolToken(SymbolType.Number, ToString());
+            return new List<SymbolToken>() { token };
         }
 
         public ISymbol MakeSubstitutions(VariableContext ctx)

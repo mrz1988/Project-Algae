@@ -27,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Processors\AlgebraProcessor.cs" />
     <Compile Include="Expressions\Constraints\EquatingSymbolicConstraint.cs" />
     <Compile Include="Expressions\Constraints\BasicSymbolicConstraint.cs" />
     <Compile Include="Expressions\Constraints\SymbolicConstraints.cs" />
@@ -46,15 +47,15 @@
     <Compile Include="Expressions\Operations\Sine.cs" />
     <Compile Include="Expressions\Operations\Tangent.cs" />
     <Compile Include="Expressions\Operations\UnaryOperation.cs" />
-    <Compile Include="Tokenizers\FromString\Exceptions.cs" />
-    <Compile Include="Tokenizers\FromString\MatchAllParenthesesProcessor.cs" />
-    <Compile Include="Tokenizers\FromString\NegationProcessor.cs" />
-    <Compile Include="Tokenizers\FromString\RedundantParenthesesProcessor.cs" />
-    <Compile Include="Tokenizers\FromString\StringToPrimitiveTokenPipe.cs" />
-    <Compile Include="Tokenizers\FromString\TokenValidater.cs" />
-    <Compile Include="Tokenizers\FromString\Utilities.cs" />
+    <Compile Include="Tokenizers\Strings\Exceptions.cs" />
+    <Compile Include="Tokenizers\Strings\MatchAllParenthesesProcessor.cs" />
+    <Compile Include="Tokenizers\Strings\NegationProcessor.cs" />
+    <Compile Include="Tokenizers\Strings\RedundantParenthesesProcessor.cs" />
+    <Compile Include="Tokenizers\Strings\StringToPrimitiveTokenPipe.cs" />
+    <Compile Include="Tokenizers\Strings\TokenValidater.cs" />
+    <Compile Include="Tokenizers\Strings\Utilities.cs" />
     <Compile Include="Tokenizers\SymbolToken.cs" />
-    <Compile Include="Tokenizers\FromString\StringTokenizer.cs" />
+    <Compile Include="Tokenizers\Strings\StringTokenizer.cs" />
     <Compile Include="Expressions\VariableContext.cs" />
     <Compile Include="Expressions\Values\Variable.cs" />
     <Compile Include="Expressions\Functions\Function.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ZMath.Algebraic.Values;
 using ZMath.Algebraic.Constraints;
 
@@ -115,6 +116,29 @@ namespace ZMath.Algebraic.Operations
             _hash = hash;
 
             return hash;
+        }
+
+        public override string ToString()
+        {
+            var symbol = SymbolToken.OperatorStringOf(Type);
+            return $"{symbol}({Child.ToString()})";
+        }
+
+        public string ToString(VariableContext ctx)
+        {
+            return ToString();
+        }
+
+        public virtual List<SymbolToken> Tokenize()
+        {
+            var opToken = new SymbolToken(Type, SymbolToken.OperatorStringOf(Type));
+            var tokens = new List<SymbolToken>();
+            tokens.Add(opToken);
+            tokens.Add(SymbolToken.OpenBracket);
+            tokens.AddRange(Child.Tokenize());
+            tokens.Add(SymbolToken.CloseBracket);
+
+            return tokens;
         }
 
         public static bool operator ==(UnaryOperation a, ISymbol b)

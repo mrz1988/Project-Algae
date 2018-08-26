@@ -4,6 +4,8 @@ using ZMath.Algebraic.Constraints;
 using ZMath.Algebraic.Operations;
 using ZMath.Algebraic.Values;
 
+using ZMath.Algebraic.Transforms;
+
 namespace ZMath.Algebraic.Tests.Expressions.Constraints
 {
     [TestFixture]
@@ -139,6 +141,24 @@ namespace ZMath.Algebraic.Tests.Expressions.Constraints
             Assert.False(failing1.Matches(constraint));
             constraint.Reset();
             Assert.False(failing2.Matches(constraint));
+        }
+
+        [Test]
+        public static void CanMatchNestedVariableAddition()
+        {
+            var exp = new Addition(
+                new Multiplication(
+                    Numbers.Two,
+                    Numbers.X
+                ),
+                new Multiplication(
+                    Numbers.Three,
+                    Numbers.X
+                )
+            );
+
+            var t = SymbolicTransform.AdditionOfProductsHasTwoOfTheSameRightOperands;
+            Assert.True(exp.Matches(t));
         }
     }
 }

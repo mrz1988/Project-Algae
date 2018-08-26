@@ -42,12 +42,36 @@ namespace ZMath.Algebraic
             { "}", SymbolType.CloseBracket },
         };
 
+        private static readonly Dictionary<SymbolType, string> _operatorToStringMapping = new Dictionary<SymbolType, string>
+        {
+            { SymbolType.Sine, "sin" },
+            { SymbolType.Cosine, "cos" },
+            { SymbolType.Tangent, "tan" },
+            { SymbolType.ArcSine, "arcsin" },
+            { SymbolType.ArcCosine, "arccos" },
+            { SymbolType.ArcTangent, "arctan" },
+            { SymbolType.Addition, "+" },
+            { SymbolType.Subtraction, "-" },
+            { SymbolType.Multiplication, "*" },
+            { SymbolType.Division, "/" },
+            { SymbolType.Exponentiation, "^" },
+            { SymbolType.Factorial, "!" },
+            { SymbolType.OpenBracket, "(" },
+            { SymbolType.CloseBracket, ")" },
+            { SymbolType.Negation, "-" },
+        };
+
         public static readonly List<string> ValidSymbols = SymbolicOperators.Keys.ToList();
 
         public SymbolToken(SymbolType type, string token)
         {
             Type = type;
             Token = token;
+        }
+
+        public static string OperatorStringOf(SymbolType type)
+        {
+            return _operatorToStringMapping[type];
         }
 
         public static bool TryParse(string val, out SymbolToken token)

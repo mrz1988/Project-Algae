@@ -22,5 +22,22 @@ namespace ZMath.Algebraic.Operations
         {
             return new Number(left * right);
         }
+
+        public override string ToString()
+        {
+            var symbol = SymbolToken.OperatorStringOf(Type);
+            var left = Operand1.ToString();
+            if (Operand1.Type.Order() < Type.Order())
+                left = $"({left})";
+
+            var right = Operand2.ToString();
+            if (Operand2.Type.Order() < Type.Order())
+                right = $"({right})";
+
+            // we reverse here since we want the more complex stuff on the left.
+            // our transforms tend to push them to the right, and we can do this
+            // since multiplication is commutative.
+            return $"{right} {symbol} {left}";
+        }
     }
 }

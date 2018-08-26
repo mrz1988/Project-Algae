@@ -225,6 +225,30 @@ namespace ZMath.Algebraic.Transforms
                 }
             );
 
+        public static EquatingSymbolicConstraint AdditionOfProductsHasTwoOfTheSameRightOperands =
+            new EquatingSymbolicConstraint(
+                s => s.Type == SymbolType.Addition,
+                new EquatingSymbolicConstraint[]
+                {
+                    new EquatingSymbolicConstraint(
+                        s => s.Type == SymbolType.Multiplication,
+                        new EquatingSymbolicConstraint[]
+                        {
+                            new EquatingSymbolicConstraint(),
+                            new EquatingSymbolicConstraint(SymbolNames.One)
+                        }
+                    ),
+                    new EquatingSymbolicConstraint(
+                        s => s.Type == SymbolType.Multiplication,
+                        new EquatingSymbolicConstraint[]
+                        {
+                            new EquatingSymbolicConstraint(),
+                            new EquatingSymbolicConstraint(SymbolNames.One)
+                        }
+                    )
+                }
+            );
+
         private static SymbolMap MapLeftChild = new SymbolMap(new SymbolMap[]
         {
             new SymbolMap(SymbolNames.Left),
@@ -244,6 +268,20 @@ namespace ZMath.Algebraic.Transforms
             {
                 new SymbolMap(SymbolNames.Two),
                 new SymbolMap(SymbolNames.Three)
+            })
+        });
+
+        private static SymbolMap MapFourLeaves = new SymbolMap(new SymbolMap[]
+        {
+            new SymbolMap(new SymbolMap[]
+            {
+                new SymbolMap(SymbolNames.One),
+                new SymbolMap(SymbolNames.Two)
+            }),
+            new SymbolMap(new SymbolMap[]
+            {
+                new SymbolMap(SymbolNames.Three),
+                new SymbolMap(SymbolNames.Four)
             })
         });
 
@@ -319,6 +357,17 @@ namespace ZMath.Algebraic.Transforms
             MapOneLeafLeftTwoLeavesRight.GenerateContext()
         );
 
+        private static Function LeavesCollapseIntoNestedAddition = new Function(
+            new Multiplication(
+                new Addition(
+                    new Variable(SymbolNames.One.Name),
+                    new Variable(SymbolNames.Three.Name)
+                ),
+                new Variable(SymbolNames.Two.Name)
+            ),
+            MapFourLeaves.GenerateContext()
+        );
+
         public static SymbolicTransform OneTimesAnythingIsItself = New(
             OneTimesAnything,
             MapRightChild,
@@ -373,6 +422,12 @@ namespace ZMath.Algebraic.Transforms
             AdditionWithOneTwoLeftThreeRight
         );
 
+        public static SymbolicTransform TwoAddedProductsWithCommonOperandAreCombined = New(
+            AdditionOfProductsHasTwoOfTheSameRightOperands,
+            MapFourLeaves,
+            LeavesCollapseIntoNestedAddition
+        );
+
         public static TransformSet AlgebraicReduce = new TransformSet(
             new List<SymbolicTransform>()
             {
@@ -385,6 +440,7 @@ namespace ZMath.Algebraic.Transforms
                 AnythingTimesItselfIsItselfSquared,
                 MultipliedConstantsPropagateUpwards,
                 AddedConstantsPropagateUpwards,
+                TwoAddedProductsWithCommonOperandAreCombined,
             });
         #endregion
     }

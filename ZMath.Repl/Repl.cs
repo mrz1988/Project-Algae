@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace ConsoleApp1
+namespace ZMath.Repl
 {
     class Repl
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var runner = new ReplManager();
+            runner.Start();
         }
     }
 }
